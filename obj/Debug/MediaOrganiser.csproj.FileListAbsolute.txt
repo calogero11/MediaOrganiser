@@ -7,3 +7,5 @@ C:\Users\Calgero.Prestifilipp\Documents\Projects\MediaOrganiser\obj\Debug\MediaO
 C:\Users\Calgero.Prestifilipp\Documents\Projects\MediaOrganiser\obj\Debug\MediaOrganiser.csproj.CoreCompileInputs.cache
 C:\Users\Calgero.Prestifilipp\Documents\Projects\MediaOrganiser\obj\Debug\MediaOrganiser.exe
 C:\Users\Calgero.Prestifilipp\Documents\Projects\MediaOrganiser\obj\Debug\MediaOrganiser.pdb
+C:\Users\Calgero.Prestifilipp\Documents\Projects\MediaOrganiser\obj\Debug\MediaOrganiser.MainForm.resources
+C:\Users\Calgero.Prestifilipp\Documents\Projects\MediaOrganiser\obj\Debug\MediaOrganiser.HomeForm.resources
