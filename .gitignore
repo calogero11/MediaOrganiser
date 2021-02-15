@@ -1,3 +1,7 @@
 /Data
-/bin
-/obj
+*.suo
+*.user
+_ReSharper.*
+bin
+obj
+packages
