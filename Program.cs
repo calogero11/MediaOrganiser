@@ -15,8 +15,7 @@ namespace MediaOrganiser
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            IViewService viewService = new ViewService();
-            Application.Run(new MainForm(viewService));
+            Application.Run(new MainForm((IViewService) new ViewService(), (IDataService) new DataService()));
         }
     }
 }
