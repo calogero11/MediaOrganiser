@@ -29,49 +29,50 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HomeForm));
-            this.ImgFile = new System.Windows.Forms.PictureBox();
-            this.LblNoFiles = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.ImgFile)).BeginInit();
+            this.FileManger = new System.Windows.Forms.ListView();
+            this.iconList = new System.Windows.Forms.ImageList(this.components);
             this.SuspendLayout();
             // 
-            // ImgFile
+            // FileManger
             // 
-            this.ImgFile.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.ImgFile.Image = ((System.Drawing.Image)(resources.GetObject("ImgFile.Image")));
-            this.ImgFile.Location = new System.Drawing.Point(257, 185);
-            this.ImgFile.Name = "ImgFile";
-            this.ImgFile.Size = new System.Drawing.Size(100, 100);
-            this.ImgFile.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.ImgFile.TabIndex = 0;
-            this.ImgFile.TabStop = false;
+            this.FileManger.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.FileManger.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.FileManger.HideSelection = false;
+            this.FileManger.LargeImageList = this.iconList;
+            this.FileManger.Location = new System.Drawing.Point(0, 0);
+            this.FileManger.Name = "FileManger";
+            this.FileManger.Size = new System.Drawing.Size(619, 443);
+            this.FileManger.SmallImageList = this.iconList;
+            this.FileManger.TabIndex = 0;
+            this.FileManger.UseCompatibleStateImageBehavior = false;
+            this.FileManger.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.FileManger_ItemSelectionChanged);
+            this.FileManger.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.FileManger_MouseDoubleClick);
             // 
-            // LblNoFiles
+            // iconList
             // 
-            this.LblNoFiles.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.LblNoFiles.AutoSize = true;
-            this.LblNoFiles.Location = new System.Drawing.Point(189, 292);
-            this.LblNoFiles.Name = "LblNoFiles";
-            this.LblNoFiles.Size = new System.Drawing.Size(242, 13);
-            this.LblNoFiles.TabIndex = 1;
-            this.LblNoFiles.Text = "No files to show. Please try Importing some media.";
+            this.iconList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("iconList.ImageStream")));
+            this.iconList.TransparentColor = System.Drawing.Color.Transparent;
+            this.iconList.Images.SetKeyName(0, "file.png");
+            this.iconList.Images.SetKeyName(1, "folder.png");
             // 
             // HomeForm
             // 
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(635, 482);
-            this.Controls.Add(this.LblNoFiles);
-            this.Controls.Add(this.ImgFile);
+            this.ClientSize = new System.Drawing.Size(619, 443);
+            this.Controls.Add(this.FileManger);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "HomeForm";
-            ((System.ComponentModel.ISupportInitialize)(this.ImgFile)).EndInit();
+            this.Load += new System.EventHandler(this.HomeForm_Load);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
         private System.Windows.Forms.Label LblNoFiles;
         private System.Windows.Forms.PictureBox ImgFile;
+        private System.Windows.Forms.ListView FileManger;
+        private System.Windows.Forms.ImageList iconList;
     }
 }

@@ -1,11 +1,13 @@
 ﻿using MediaOrganiser.Interfaces;
 using System.Windows.Forms;
+using MediaOrganiser.Modals;
+using System.Collections.Generic;
 
 namespace MediaOrganiser.Services
 {
     class ViewService: IViewService
     {
-        public void updateView(Label title, Form form, Panel pnlFormLoader)
+        public void UpdateView(Label title, Form form, Panel pnlFormLoader)
         {
             form.Dock = DockStyle.Fill;
             form.TopLevel = false;
@@ -18,6 +20,28 @@ namespace MediaOrganiser.Services
             pnlFormLoader.Controls.Add(form);
 
             form.Show();
+        }
+
+        public void ShowFilesAndDirectories(HashSet<string> items, ListView fileManger, CurrentDirectory currentDirectory)
+        {
+            fileManger.Items.Clear();
+            if (currentDirectory.PlayList != null)
+            {
+                fileManger.Items.Add("...", 1);
+            }
+
+            foreach (var item in items)
+            {
+                if (currentDirectory.PlayList != null && currentDirectory.Category != null)
+                {
+                    fileManger.Items.Add(item, 0);
+                }
+                else 
+                {
+                    fileManger.Items.Add(item, 1);
+                }
+            }
+            
         }
     }
 }
