@@ -63,11 +63,15 @@ namespace MediaOrganiser
         {
             if (currentDirectory.Category != null)
             {
-                return  currentDirectory.Category;
+                var currentPosition = currentDirectory.Category;
+                currentDirectory.Category = null;
+                return currentPosition;
             }
             else if (currentDirectory.PlayList != null)
             {
-                return currentDirectory.PlayList;
+                var currentPosition = currentDirectory.PlayList;
+                currentDirectory.PlayList = null;
+                return currentPosition;
             }
             else
             {
