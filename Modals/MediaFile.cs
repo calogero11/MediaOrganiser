@@ -6,6 +6,27 @@ namespace MediaOrganiser.Modals
 {
     public class MediaFile
     {
+        public MediaFile()
+        {
+
+        }
+
+        public MediaFile(
+            string name,
+            string path,
+            string type,
+            string comment,
+            Image image,
+            List<Category> categories)
+        {
+            Name = name;
+            Path = path;
+            Type = type;
+            Comment = comment;
+            Image = image;
+            Categories = categories;
+        }
+
         [JsonProperty("name")]
         public string Name { get; set; }
 
@@ -13,7 +34,7 @@ namespace MediaOrganiser.Modals
         public string Path { get; set; }
 
         [JsonProperty("type")]
-        public MediaType Type { get; set; }
+        public string Type { get; set; }
 
         [JsonProperty("comment")]
         public string Comment { get; set; }

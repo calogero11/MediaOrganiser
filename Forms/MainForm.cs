@@ -6,8 +6,9 @@ namespace MediaOrganiser
 {
     public partial class MainForm : Form
     {
-        public readonly IViewService viewService;
-        public readonly IDataService dataService;
+        private readonly IViewService viewService;
+        private readonly IDataService dataService;
+        private (Button, Panel) activeMenuButton;
 
         public MainForm(IViewService viewService, IDataService dataService)
         {
@@ -16,35 +17,47 @@ namespace MediaOrganiser
 
             InitializeComponent();
 
-            var playlists = dataService.GetPlayLists();
-            
-            if (playlists == null)
+            if (dataService.GetPlayLists() == null)
             {
                 viewService.UpdateView(LblTitle, new EmptyHomeForm(), PnlFormLoader);
             }
             else
             {
-                viewService.UpdateView(LblTitle, new HomeForm((IViewService) new ViewService(), (IDataService)new DataService()), PnlFormLoader);
+                viewService.UpdateView(LblTitle, new HomeForm(viewService, dataService), PnlFormLoader);
             }
+
+            activeMenuButton = (BtnHome, PnlHomeButtonIndicator);
         }
 
         private void BtnHome_Click(object sender, System.EventArgs e)
         {
-            var playlists = dataService.GetPlayLists();
-
-            if (playlists == null)
+            activeMenuButton = viewService.ActivateButton(activeMenuButton.Item1, activeMenuButton.Item2, BtnHome, PnlHomeButtonIndicator);
+          
+            if (dataService.GetPlayLists() == null)
             {
                 viewService.UpdateView(LblTitle, new EmptyHomeForm(), PnlFormLoader);
             }
             else
             {
-                viewService.UpdateView(LblTitle, new HomeForm((IViewService)new ViewService(), (IDataService)new DataService()), PnlFormLoader);
+                viewService.UpdateView(LblTitle, new HomeForm(viewService, dataService), PnlFormLoader);
             }
         }
 
         private void BtnExit_Click(object sender, System.EventArgs e)
         {
+            activeMenuButton = viewService.ActivateButton(activeMenuButton.Item1, activeMenuButton.Item2, BtnExit, PnlExitButtonIndicator);
             Application.Exit();
+        }
+
+        private void BtnAdd_MouseEnter(object sender, System.EventArgs e)
+        {
+            TtMainMenu.Show("Add media with info", BtnAdd);
+        }
+
+        private void BtnAdd_Click(object sender, System.EventArgs e)
+        {
+            activeMenuButton = viewService.ActivateButton(activeMenuButton.Item1, activeMenuButton.Item2, BtnAdd, PnlAddButtonIndicator);
+            viewService.UpdateView(LblTitle, new AddForm(dataService, viewService), PnlFormLoader);
         }
     }
 }

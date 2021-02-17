@@ -8,6 +8,17 @@ namespace MediaOrganiser.Modals
 {
     public class CurrentDirectory
     {
+        public CurrentDirectory()
+        {
+            
+        }
+
+        public CurrentDirectory(string playList, string category)
+        {
+            PlayList = playList;
+            Category = category;
+        }
+
         public string PlayList { get; set; }
         public string Category { get; set; }
     }
