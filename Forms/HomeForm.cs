@@ -1,7 +1,6 @@
 ﻿using MediaOrganiser.Interfaces;
 using System.Windows.Forms;
 using MediaOrganiser.Modals;
-using System.Linq;
 
 namespace MediaOrganiser
 {
@@ -12,7 +11,7 @@ namespace MediaOrganiser
         public string selectedItem;
         public CurrentDirectory currentDirectory = new CurrentDirectory();
 
-        public HomeForm(IViewService viewService, 
+        public HomeForm(IViewService viewService,
             IDataService dataService)
         {
             this.viewService = viewService;
@@ -23,19 +22,57 @@ namespace MediaOrganiser
         private void HomeForm_Load(object sender, System.EventArgs e)
         {
             var playLists = dataService.GetPlayLists();
-            viewService.ShowFilesAndDirectories(playLists, FileManger, currentDirectory);
+            viewService.ShowFilesAndDirectories(playLists, FileManager, currentDirectory);
         }
 
-        private void FileManger_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void FileManager_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            // check if the selected file is a dir
             var storedItems = dataService.GetAllChildren(selectedItem, currentDirectory);
-            viewService.ShowFilesAndDirectories(storedItems, FileManger, currentDirectory);
+            viewService.ShowFilesAndDirectories(storedItems, FileManager, currentDirectory);
+
+            if (currentDirectory.Category == null && currentDirectory.PlayList != null)
+            {
+                LblCurrentDirectory.Text = $"Current Directory: {currentDirectory.PlayList}";
+            }
+            else if (currentDirectory.Category != null && currentDirectory.PlayList != null)
+            {
+                LblCurrentDirectory.Text = $"Current Directory: {currentDirectory.PlayList} > {currentDirectory.Category}";
+            }
+            else
+            {
+                LblCurrentDirectory.Text = "Current Directory: ";
+            }
         }
 
-        private void FileManger_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        private void FileManager_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
             selectedItem = e.Item.Text;
+        }
+
+        private void BtnAdd_Click(object sender, System.EventArgs e)
+        {
+            dataService.PostItemIndependently(TxtbxFileManager.Text, currentDirectory);
+            selectedItem = GetCurrentDirectory();
+            var storedItems = dataService.GetAllChildren(selectedItem, currentDirectory);
+            viewService.ShowFilesAndDirectories(storedItems, FileManager, currentDirectory);
+        }
+
+        private string GetCurrentDirectory()
+        {
+            if (currentDirectory.Category != null)
+            {
+                selectedItem = currentDirectory.Category;
+            }
+            else if (currentDirectory.PlayList != null)
+            {
+                selectedItem = currentDirectory.PlayList;
+            }
+            else
+            {
+                selectedItem = null;
+            }
+
+            return selectedItem;
         }
     }
 }
