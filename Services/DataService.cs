@@ -9,8 +9,55 @@ using Newtonsoft.Json;
 
 namespace MediaOrganiser.Services
 {
-    public class DataService: IDataService
+    public class DataService : IDataService
     {
+        public bool PostItemIndependently(string itemName, CurrentDirectory currentDirectory)
+        {
+            var data = ReadData();
+
+            switch (currentDirectory)
+            {
+                case var x when x.Category != null:
+                    break;
+                case var x when x.PlayList != null:
+                    break;
+                default:
+                    return AddPlayList(itemName);
+            }
+
+            return false;
+        }
+
+        private bool AddPlayList(string playListName)
+        {
+            var data = ReadData();
+            bool isSaved;
+
+            if (data.PlayLists == null)
+            {
+                data.PlayLists = new List<PlayList>
+                {
+                    new PlayList(playListName, null)
+                };
+                SaveChanges(data);
+                isSaved = true;
+            }
+            else
+            {
+                data.PlayLists.Add(new PlayList(playListName, null));
+                SaveChanges(data);
+                isSaved = true;
+            }
+        
+            return isSaved;
+        }
+
+        private void SaveChanges(Data data)
+        {
+            string json = JsonConvert.SerializeObject(data);
+            File.WriteAllText(@"..\..\Data\data.json", json);
+        }
+
         public bool PostFiles(string playListName, string categoryName, string mediaFile, Image image, string comment)
         {
             var data = ReadData();
@@ -108,7 +155,7 @@ namespace MediaOrganiser.Services
             switch (currentDirecotory)
             {
                 case var x when x.Category != null:
-                    if (selectedItem == "...")
+                    if (selectedItem == "..." && selectedItem != null)
                     {
                         items = GetCategories(data, currentDirecotory.PlayList);
                         currentDirecotory.Category = null;
@@ -121,7 +168,7 @@ namespace MediaOrganiser.Services
 
                     return items;
                 case var x when x.PlayList != null:
-                    if (selectedItem != "...")
+                    if (selectedItem != "..." && selectedItem != null)
                     {
                         items = GetFiles(data, currentDirecotory.PlayList, selectedItem);
                         currentDirecotory.Category = selectedItem;
@@ -134,7 +181,7 @@ namespace MediaOrganiser.Services
 
                     return items;
                 default:
-                    if (selectedItem != "...")
+                    if (selectedItem != "..." && selectedItem != null)
                     {
                         items = GetCategories(data, selectedItem);
                         currentDirecotory.PlayList = selectedItem;

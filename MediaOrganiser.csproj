@@ -125,7 +125,6 @@
   <ItemGroup>
     <Content Include="Assets\Images\file.png" />
     <Content Include="Assets\Images\folder.png" />
-    <Content Include="Assets\Images\importFolder.png" />
     <Content Include="Data\Data.json" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
