@@ -84,6 +84,7 @@
             this.BtnEdit.TabIndex = 5;
             this.BtnEdit.Text = "...";
             this.BtnEdit.UseVisualStyleBackColor = true;
+            this.BtnEdit.Click += new System.EventHandler(this.BtnEdit_Click);
             // 
             // BtnRemove
             // 

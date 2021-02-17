@@ -90,5 +90,13 @@ namespace MediaOrganiser
             }
            
         }
+
+        private void BtnEdit_Click(object sender, System.EventArgs e)
+        {
+            dataService.UpdateItemIndependently(selectedItem, TxtbxFileManager.Text, currentDirectory);
+            selectedItem = GetCurrentDirectory();
+            var storedItems = dataService.GetAllChildren(selectedItem, currentDirectory);
+            viewService.ShowFilesAndDirectories(storedItems, FileManager, currentDirectory);
+        }
     }
 }
