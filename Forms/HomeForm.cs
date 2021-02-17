@@ -81,9 +81,14 @@ namespace MediaOrganiser
 
         private void BtnRemove_Click(object sender, System.EventArgs e)
         {
+            RemoveItem();
+        }
+
+        private void RemoveItem()
+        {
             var confirmResult = MessageBox.Show("Are you sure you wish to remove this item ??",
-                                     "Confirm Delete!!",
-                                     MessageBoxButtons.YesNo);
+                                    "Confirm Delete!!",
+                                    MessageBoxButtons.YesNo);
 
             if (confirmResult == DialogResult.Yes)
             {
@@ -92,7 +97,6 @@ namespace MediaOrganiser
                 var storedItems = dataService.GetAllChildren(selectedItem, currentDirectory);
                 viewService.ShowFilesAndDirectories(storedItems, FileManager, currentDirectory);
             }
-           
         }
 
         private void BtnEdit_Click(object sender, System.EventArgs e)
@@ -101,6 +105,14 @@ namespace MediaOrganiser
             selectedItem = GetCurrentDirectory();
             var storedItems = dataService.GetAllChildren(selectedItem, currentDirectory);
             viewService.ShowFilesAndDirectories(storedItems, FileManager, currentDirectory);
+        }
+
+        private void FileManager_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyData == Keys.Delete)
+            {
+                RemoveItem();
+            }
         }
     }
 }
