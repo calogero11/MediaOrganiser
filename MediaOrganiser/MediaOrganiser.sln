@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaOrganiser", "MediaOrganiser.csproj", "{DA18CCB7-C888-4008-BA84-61D9CB238A29}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaOrganiser.Tests", "..\MediaOrganiser.Tests\MediaOrganiser.Tests.csproj", "{0A7B9309-FEF6-4C9B-9AD9-D3E282A1C095}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DA18CCB7-C888-4008-BA84-61D9CB238A29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA18CCB7-C888-4008-BA84-61D9CB238A29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA18CCB7-C888-4008-BA84-61D9CB238A29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA18CCB7-C888-4008-BA84-61D9CB238A29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A7B9309-FEF6-4C9B-9AD9-D3E282A1C095}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A7B9309-FEF6-4C9B-9AD9-D3E282A1C095}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A7B9309-FEF6-4C9B-9AD9-D3E282A1C095}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A7B9309-FEF6-4C9B-9AD9-D3E282A1C095}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DD1F4287-B76C-4162-A206-4210FE7F4FE6}
+	EndGlobalSection
+EndGlobal
