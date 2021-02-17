@@ -11,6 +11,41 @@ namespace MediaOrganiser.Services
 {
     public class DataService : IDataService
     {
+        public bool RemoveItemIndependently(string itemName, CurrentDirectory currentDirectory)
+        {
+            var data = ReadData();
+
+            if (itemName != null)
+            {
+                switch (currentDirectory)
+                {
+                    case var x when x.Category != null:
+                        break;
+                    case var x when x.PlayList != null:
+                        break;
+                    default:
+                        return RemovePlayList(itemName);
+                }
+            }
+
+            return false;
+        }
+
+        private bool RemovePlayList(string itemName)
+        {
+            var data = ReadData();
+            
+            var selectedPlayList = data.PlayLists.FirstOrDefault(playList => playList.Name == itemName);
+            if (selectedPlayList != null)
+            {
+                data.PlayLists.Remove(selectedPlayList);
+                SaveChanges(data);
+                return true;
+            }
+
+            return false; 
+        }
+
         public bool PostItemIndependently(string itemName, CurrentDirectory currentDirectory)
         {
             var data = ReadData();

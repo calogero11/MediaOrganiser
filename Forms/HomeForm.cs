@@ -1,6 +1,7 @@
 ﻿using MediaOrganiser.Interfaces;
 using System.Windows.Forms;
 using MediaOrganiser.Modals;
+using System.Collections.Generic;
 
 namespace MediaOrganiser
 {
@@ -55,24 +56,39 @@ namespace MediaOrganiser
             selectedItem = GetCurrentDirectory();
             var storedItems = dataService.GetAllChildren(selectedItem, currentDirectory);
             viewService.ShowFilesAndDirectories(storedItems, FileManager, currentDirectory);
+            viewService.ClearForm(new List<TextBox> { TxtbxFileManager });
         }
 
         private string GetCurrentDirectory()
         {
             if (currentDirectory.Category != null)
             {
-                selectedItem = currentDirectory.Category;
+                return  currentDirectory.Category;
             }
             else if (currentDirectory.PlayList != null)
             {
-                selectedItem = currentDirectory.PlayList;
+                return currentDirectory.PlayList;
             }
             else
             {
-                selectedItem = null;
+                return null;
             }
+        }
 
-            return selectedItem;
+        private void BtnRemove_Click(object sender, System.EventArgs e)
+        {
+            var confirmResult = MessageBox.Show("Are you sure you wish to remove this item ??",
+                                     "Confirm Delete!!",
+                                     MessageBoxButtons.YesNo);
+
+            if (confirmResult == DialogResult.Yes)
+            {
+                dataService.RemoveItemIndependently(selectedItem, currentDirectory);
+                selectedItem = GetCurrentDirectory();
+                var storedItems = dataService.GetAllChildren(selectedItem, currentDirectory);
+                viewService.ShowFilesAndDirectories(storedItems, FileManager, currentDirectory);
+            }
+           
         }
     }
 }
