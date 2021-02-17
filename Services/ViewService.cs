@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using MediaOrganiser.Modals;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace MediaOrganiser.Services
 {
@@ -42,6 +43,34 @@ namespace MediaOrganiser.Services
                 }
             }
             
+        }
+
+        public void AddTextBoxAutoComplete(TextBox textBox, string[] suggestions)
+        {
+            if (suggestions != null)
+            {
+                var autoCompleteStringCollection = new AutoCompleteStringCollection();
+                autoCompleteStringCollection.AddRange(suggestions);
+                textBox.AutoCompleteCustomSource = autoCompleteStringCollection;
+            }   
+        }
+
+        public (Button, Panel) ActivateButton(Button fromActiveButton, Panel fromActivePanel, Button toActiveButton, Panel toActivePanel)
+        {
+            fromActiveButton.BackColor = Color.FromArgb(221, 221, 221);
+            fromActivePanel.BackColor = Color.FromArgb(196, 196, 196);
+            toActiveButton.BackColor = Color.FromArgb(240, 240, 240);
+            toActivePanel.BackColor = Color.FromArgb(58, 211, 0);
+
+            return (toActiveButton, toActivePanel);
+        }
+
+        public void ClearForm(List<TextBox> textBoxes)
+        {
+            foreach(var textBox in textBoxes)
+            {
+                textBox.Text = null;
+            }
         }
     }
 }

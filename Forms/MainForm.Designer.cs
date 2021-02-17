@@ -29,17 +29,19 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.panel6 = new System.Windows.Forms.Panel();
-            this.panel5 = new System.Windows.Forms.Panel();
+            this.PnlAddButtonIndicator = new System.Windows.Forms.Panel();
+            this.BtnAdd = new System.Windows.Forms.Button();
+            this.PnlExitButtonIndicator = new System.Windows.Forms.Panel();
+            this.PnlHomeButtonIndicator = new System.Windows.Forms.Panel();
             this.BtnExit = new System.Windows.Forms.Button();
-            this.BtnOrganise = new System.Windows.Forms.Button();
             this.BtnHome = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.LblTitle = new System.Windows.Forms.Label();
             this.PnlFormLoader = new System.Windows.Forms.Panel();
-            this.panel4 = new System.Windows.Forms.Panel();
+            this.TtMainMenu = new System.Windows.Forms.ToolTip(this.components);
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             this.SuspendLayout();
@@ -47,11 +49,11 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(221)))), ((int)(((byte)(221)))));
-            this.panel1.Controls.Add(this.panel4);
-            this.panel1.Controls.Add(this.panel6);
-            this.panel1.Controls.Add(this.panel5);
+            this.panel1.Controls.Add(this.PnlAddButtonIndicator);
+            this.panel1.Controls.Add(this.BtnAdd);
+            this.panel1.Controls.Add(this.PnlExitButtonIndicator);
+            this.panel1.Controls.Add(this.PnlHomeButtonIndicator);
             this.panel1.Controls.Add(this.BtnExit);
-            this.panel1.Controls.Add(this.BtnOrganise);
             this.panel1.Controls.Add(this.BtnHome);
             this.panel1.Controls.Add(this.panel2);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
@@ -60,21 +62,45 @@
             this.panel1.Size = new System.Drawing.Size(191, 556);
             this.panel1.TabIndex = 0;
             // 
-            // panel6
+            // PnlAddButtonIndicator
             // 
-            this.panel6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(196)))), ((int)(((byte)(196)))), ((int)(((byte)(196)))));
-            this.panel6.Location = new System.Drawing.Point(0, 203);
-            this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(7, 89);
-            this.panel6.TabIndex = 1;
+            this.PnlAddButtonIndicator.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(196)))), ((int)(((byte)(196)))), ((int)(((byte)(196)))));
+            this.PnlAddButtonIndicator.Location = new System.Drawing.Point(0, 203);
+            this.PnlAddButtonIndicator.Name = "PnlAddButtonIndicator";
+            this.PnlAddButtonIndicator.Size = new System.Drawing.Size(7, 89);
+            this.PnlAddButtonIndicator.TabIndex = 5;
             // 
-            // panel5
+            // BtnAdd
             // 
-            this.panel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(126)))), ((int)(((byte)(22)))));
-            this.panel5.Location = new System.Drawing.Point(0, 114);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(7, 89);
-            this.panel5.TabIndex = 0;
+            this.BtnAdd.Dock = System.Windows.Forms.DockStyle.Top;
+            this.BtnAdd.FlatAppearance.BorderSize = 0;
+            this.BtnAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnAdd.Font = new System.Drawing.Font("Microsoft Yi Baiti", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnAdd.Location = new System.Drawing.Point(0, 203);
+            this.BtnAdd.Name = "BtnAdd";
+            this.BtnAdd.Size = new System.Drawing.Size(191, 89);
+            this.BtnAdd.TabIndex = 4;
+            this.BtnAdd.Text = "Add";
+            this.BtnAdd.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.BtnAdd.UseVisualStyleBackColor = true;
+            this.BtnAdd.Click += new System.EventHandler(this.BtnAdd_Click);
+            this.BtnAdd.MouseEnter += new System.EventHandler(this.BtnAdd_MouseEnter);
+            // 
+            // PnlExitButtonIndicator
+            // 
+            this.PnlExitButtonIndicator.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(196)))), ((int)(((byte)(196)))), ((int)(((byte)(196)))));
+            this.PnlExitButtonIndicator.Location = new System.Drawing.Point(0, 467);
+            this.PnlExitButtonIndicator.Name = "PnlExitButtonIndicator";
+            this.PnlExitButtonIndicator.Size = new System.Drawing.Size(7, 89);
+            this.PnlExitButtonIndicator.TabIndex = 2;
+            // 
+            // PnlHomeButtonIndicator
+            // 
+            this.PnlHomeButtonIndicator.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(58)))), ((int)(((byte)(211)))), ((int)(((byte)(0)))));
+            this.PnlHomeButtonIndicator.Location = new System.Drawing.Point(0, 114);
+            this.PnlHomeButtonIndicator.Name = "PnlHomeButtonIndicator";
+            this.PnlHomeButtonIndicator.Size = new System.Drawing.Size(7, 89);
+            this.PnlHomeButtonIndicator.TabIndex = 0;
             // 
             // BtnExit
             // 
@@ -90,20 +116,6 @@
             this.BtnExit.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.BtnExit.UseVisualStyleBackColor = true;
             this.BtnExit.Click += new System.EventHandler(this.BtnExit_Click);
-            // 
-            // BtnOrganise
-            // 
-            this.BtnOrganise.Dock = System.Windows.Forms.DockStyle.Top;
-            this.BtnOrganise.FlatAppearance.BorderSize = 0;
-            this.BtnOrganise.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnOrganise.Font = new System.Drawing.Font("Microsoft Yi Baiti", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnOrganise.Location = new System.Drawing.Point(0, 203);
-            this.BtnOrganise.Name = "BtnOrganise";
-            this.BtnOrganise.Size = new System.Drawing.Size(191, 89);
-            this.BtnOrganise.TabIndex = 2;
-            this.BtnOrganise.Text = "Organise";
-            this.BtnOrganise.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.BtnOrganise.UseVisualStyleBackColor = true;
             // 
             // BtnHome
             // 
@@ -158,14 +170,6 @@
             this.PnlFormLoader.Size = new System.Drawing.Size(635, 482);
             this.PnlFormLoader.TabIndex = 2;
             // 
-            // panel4
-            // 
-            this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(196)))), ((int)(((byte)(196)))), ((int)(((byte)(196)))));
-            this.panel4.Location = new System.Drawing.Point(0, 467);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(7, 89);
-            this.panel4.TabIndex = 2;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -193,10 +197,11 @@
         private System.Windows.Forms.Panel PnlFormLoader;
         private System.Windows.Forms.Label LblTitle;
         private System.Windows.Forms.Button BtnHome;
-        private System.Windows.Forms.Button BtnOrganise;
-        private System.Windows.Forms.Panel panel6;
-        private System.Windows.Forms.Panel panel5;
+        private System.Windows.Forms.Panel PnlHomeButtonIndicator;
         private System.Windows.Forms.Button BtnExit;
-        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Panel PnlExitButtonIndicator;
+        private System.Windows.Forms.Panel PnlAddButtonIndicator;
+        private System.Windows.Forms.Button BtnAdd;
+        private System.Windows.Forms.ToolTip TtMainMenu;
     }
 }
