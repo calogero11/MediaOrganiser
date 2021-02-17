@@ -123,7 +123,6 @@
             // 
             // LblCurrentDirectory
             // 
-            this.LblCurrentDirectory.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.LblCurrentDirectory.AutoSize = true;
             this.LblCurrentDirectory.Location = new System.Drawing.Point(3, 0);
             this.LblCurrentDirectory.Name = "LblCurrentDirectory";
@@ -145,6 +144,7 @@
             this.FileManager.UseCompatibleStateImageBehavior = false;
             this.FileManager.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.FileManager_ItemSelectionChanged);
             this.FileManager.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.FileManager_MouseDoubleClick);
+            this.FileManager.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.FileManager_PreviewKeyDown);
             // 
             // HomeForm
             // 

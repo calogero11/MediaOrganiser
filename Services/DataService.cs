@@ -33,18 +33,16 @@ namespace MediaOrganiser.Services
         {
             var data = ReadData();
 
-            var categories = data.PlayLists.FirstOrDefault(playList => playList.Name == playListName).MediaFiles.SelectMany(mediaFile => mediaFile.Categories).Where(category => category.Name == fromCatergoryName).SelectMany(category => category.Name);
-
-            if (data
+            var categories = data
                 .PlayLists
                 .FirstOrDefault(playList => playList.Name == playListName)
                 .MediaFiles
                 .SelectMany(mediaFile => mediaFile.Categories)
-                .Where(category => category.Name == fromCatergoryName) != null)
-            {
-                var mediaFileCategories = data.PlayLists.FirstOrDefault(playList => playList.Name == playListName).MediaFiles.SelectMany(mediaFile => mediaFile.Categories).Where(category => category.Name == fromCatergoryName);
+                .Where(category => category.Name == fromCatergoryName);
 
-                foreach(var mediaFileCategory in mediaFileCategories)
+            if (categories != null)
+            {
+                foreach(var mediaFileCategory in categories)
                 {
                     mediaFileCategory.Name = toCatergoryName;
                 }
@@ -80,11 +78,36 @@ namespace MediaOrganiser.Services
                     case var x when x.Category != null:
                         break;
                     case var x when x.PlayList != null:
-                        break;
+                        return RemoveCategory(itemName, currentDirectory.PlayList);
                     default:
                         return RemovePlayList(itemName);
                 }
             }
+
+            return false;
+        }
+
+        private bool RemoveCategory(string itemName, string playListName)
+        {
+            var data = ReadData();
+
+            var mediaFiles = data
+              .PlayLists
+              .FirstOrDefault(playList => playList.Name == playListName)
+              .MediaFiles;
+
+            foreach(var mediaFile in mediaFiles)
+            {
+                var selectedCategory = mediaFile.Categories.Find(category => category.Name == itemName);
+
+                if (selectedCategory != null)
+                {
+                    mediaFile.Categories.Remove(selectedCategory);
+                }
+            }
+
+            SaveChanges(data);
+            return true;
 
             return false;
         }
@@ -312,7 +335,7 @@ namespace MediaOrganiser.Services
 
             foreach (var mediaFile in mediaFiles)
             {
-                if (mediaFile.Categories == null && selectedItem == "Unknown")
+                if ((mediaFile.Categories == null || mediaFile.Categories.Count == 0) && selectedItem == "Unknown")
                 {
                     items.Add(mediaFile.Name);
                 }
@@ -335,7 +358,7 @@ namespace MediaOrganiser.Services
 
             foreach (var mediaFile in mediaFiles)
             {
-                if (mediaFile.Categories == null)
+                if (mediaFile.Categories == null || mediaFile.Categories.Count == 0)
                 {
                     items.Add("Unknown");
                 }
