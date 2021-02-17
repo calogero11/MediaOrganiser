@@ -103,11 +103,10 @@ namespace MediaOrganiser.Services
                 if (selectedCategory != null)
                 {
                     mediaFile.Categories.Remove(selectedCategory);
+                    SaveChanges(data);
+                    return true;
                 }
             }
-
-            SaveChanges(data);
-            return true;
 
             return false;
         }

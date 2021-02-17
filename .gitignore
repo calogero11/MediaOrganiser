@@ -1,8 +1,9 @@
-/Data
+
 *.suo
 *.user
 _ReSharper.*
 bin
 obj
 .vs
+MediaOrganiser.Tests/bin/Debug
 packages
