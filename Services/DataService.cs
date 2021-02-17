@@ -20,7 +20,7 @@ namespace MediaOrganiser.Services
                     case var x when x.Category != null:
                         break;
                     case var x when x.PlayList != null:
-                        break;
+                        return UpdateCategory(selectedItem, newItemName, currentDirectory.PlayList);
                     default:
                         return UpdatePlayList(selectedItem, newItemName);
                 }
@@ -29,7 +29,34 @@ namespace MediaOrganiser.Services
             return false;
         }
 
-        public bool UpdatePlayList(string fromPlayListName, string toPlayListName)
+        private bool UpdateCategory(string fromCatergoryName, string toCatergoryName, string playListName)
+        {
+            var data = ReadData();
+
+            var categories = data.PlayLists.FirstOrDefault(playList => playList.Name == playListName).MediaFiles.SelectMany(mediaFile => mediaFile.Categories).Where(category => category.Name == fromCatergoryName).SelectMany(category => category.Name);
+
+            if (data
+                .PlayLists
+                .FirstOrDefault(playList => playList.Name == playListName)
+                .MediaFiles
+                .SelectMany(mediaFile => mediaFile.Categories)
+                .Where(category => category.Name == fromCatergoryName) != null)
+            {
+                var mediaFileCategories = data.PlayLists.FirstOrDefault(playList => playList.Name == playListName).MediaFiles.SelectMany(mediaFile => mediaFile.Categories).Where(category => category.Name == fromCatergoryName);
+
+                foreach(var mediaFileCategory in mediaFileCategories)
+                {
+                    mediaFileCategory.Name = toCatergoryName;
+                }
+
+                SaveChanges(data);
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool UpdatePlayList(string fromPlayListName, string toPlayListName)
         {
             var data = ReadData();
 
@@ -285,7 +312,11 @@ namespace MediaOrganiser.Services
 
             foreach (var mediaFile in mediaFiles)
             {
-                if (mediaFile.Categories.Select(category => category.Name).Contains(selectedItem))
+                if (mediaFile.Categories == null && selectedItem == "Unknown")
+                {
+                    items.Add(mediaFile.Name);
+                }
+                else if (mediaFile.Categories != null && mediaFile.Categories.Select(category => category.Name).Contains(selectedItem))
                 {
                     items.Add(mediaFile.Name);
                 }
@@ -304,7 +335,14 @@ namespace MediaOrganiser.Services
 
             foreach (var mediaFile in mediaFiles)
             {
-                items.AddRange(mediaFile.Categories.Select(x => x.Name));
+                if (mediaFile.Categories == null)
+                {
+                    items.Add("Unknown");
+                }
+                else
+                {
+                    items.AddRange(mediaFile.Categories.Select(x => x.Name));
+                }
             }
 
             return new HashSet<string>(items);
