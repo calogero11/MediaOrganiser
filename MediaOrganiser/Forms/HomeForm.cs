@@ -54,25 +54,25 @@ namespace MediaOrganiser
         private void BtnAdd_Click(object sender, System.EventArgs e)
         {
             dataService.PostItemIndependently(TxtbxFileManager.Text, currentDirectory);
-            selectedItem.Text = GetCurrentDirectory();
+            var selectedItem = GetCurrentDirectory();
             var storedItems = dataService.GetAllChildren(selectedItem, currentDirectory);
             viewService.ShowFilesAndDirectories(storedItems, FileManager, currentDirectory);
             viewService.ClearForm(new List<TextBox> { TxtbxFileManager });
         }
 
-        private string GetCurrentDirectory()
+        private ListViewItem GetCurrentDirectory()
         {
             if (currentDirectory.Category != null)
             {
                 var currentPosition = currentDirectory.Category;
                 currentDirectory.Category = null;
-                return currentPosition;
+                return new ListViewItem() { Text = currentPosition};
             }
             else if (currentDirectory.PlayList != null)
             {
                 var currentPosition = currentDirectory.PlayList;
                 currentDirectory.PlayList = null;
-                return currentPosition;
+                return new ListViewItem() { Text = currentPosition};
             }
             
             return null;
@@ -92,7 +92,7 @@ namespace MediaOrganiser
             if (confirmResult == DialogResult.Yes)
             {
                 dataService.RemoveItemIndependently(selectedItem.Text, currentDirectory);
-                selectedItem.Text = GetCurrentDirectory();
+                selectedItem = GetCurrentDirectory();
                 var storedItems = dataService.GetAllChildren(selectedItem, currentDirectory);
                 viewService.ShowFilesAndDirectories(storedItems, FileManager, currentDirectory);
             }
@@ -101,9 +101,10 @@ namespace MediaOrganiser
         private void BtnEdit_Click(object sender, System.EventArgs e)
         {
             dataService.UpdateItemIndependently(selectedItem.Text, TxtbxFileManager.Text, currentDirectory);
-            selectedItem.Text = GetCurrentDirectory();
+            selectedItem = GetCurrentDirectory();
             var storedItems = dataService.GetAllChildren(selectedItem, currentDirectory);
             viewService.ShowFilesAndDirectories(storedItems, FileManager, currentDirectory);
+            viewService.ClearForm(new List<TextBox> { TxtbxFileManager });
         }
 
         private void FileManager_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
