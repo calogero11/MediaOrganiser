@@ -66,12 +66,17 @@ namespace MediaOrganiser.Services
 
         public (Button, Panel) ActivateButton(Button fromActiveButton, Panel fromActivePanel, Button toActiveButton, Panel toActivePanel)
         {
-            fromActiveButton.BackColor = Color.FromArgb(221, 221, 221);
-            fromActivePanel.BackColor = Color.FromArgb(196, 196, 196);
-            toActiveButton.BackColor = Color.FromArgb(240, 240, 240);
-            toActivePanel.BackColor = Color.FromArgb(58, 211, 0);
-
-            return (toActiveButton, toActivePanel);
+            if (fromActiveButton != null && fromActivePanel != null && toActiveButton != null && toActivePanel != null)
+            {
+                toActiveButton.BackColor = fromActiveButton.BackColor;
+                toActivePanel.BackColor = fromActivePanel.BackColor;
+                fromActiveButton.BackColor = Color.FromArgb(221, 221, 221);
+                fromActivePanel.BackColor = Color.FromArgb(196, 196, 196);
+            
+                return (toActiveButton, toActivePanel);
+            }
+            
+            return (null, null);
         }
 
         public void ClearForm(List<TextBox> textBoxes)
