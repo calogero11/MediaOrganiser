@@ -21,16 +21,18 @@ namespace MediaOrganiser
             InitializeComponent();
             
             var hashSetPlayLists = this.dataService.GetAllChildren(null, new CurrentDirectory());
-            string[] arrayPlayLists = new string[hashSetPlayLists.Count];
-            hashSetPlayLists.CopyTo(arrayPlayLists);
-
-            this.viewService.AddTextBoxAutoComplete(TxtbxPlayList, arrayPlayLists);
+            if (hashSetPlayLists != null)
+            {
+                string[] arrayPlayLists = new string[hashSetPlayLists.Count];
+                hashSetPlayLists.CopyTo(arrayPlayLists);
+                this.viewService.AddTextBoxAutoComplete(TxtbxPlayList, arrayPlayLists);
+            }
         }
 
         private void TxtbxPlayList_TextChanged(object sender, EventArgs e)
         {
             var hashSetPlayLists = dataService.GetAllChildren(null, new CurrentDirectory());
-            if (hashSetPlayLists.Contains(TxtbxPlayList.Text))
+            if (hashSetPlayLists != null && hashSetPlayLists.Contains(TxtbxPlayList.Text))
             {
                 var selectedItem = new ListViewItem()
                 {
