@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using MediaOrganiser.Modals;
 using System.Collections.Generic;
 using System.Drawing;
+using Image = System.Drawing.Image;
 
 namespace MediaOrganiser.Services
 {
@@ -28,7 +29,13 @@ namespace MediaOrganiser.Services
             fileManger.Items.Clear();
             if (currentDirectory.PlayList != null)
             {
-                fileManger.Items.Add("...", 1);
+                var backFolderItem = new ListViewItem()
+                {
+                    Text = "...",
+                    ImageIndex = 1,
+                    Tag = "backButton"
+                };
+                fileManger.Items.Add(backFolderItem);
             }
 
             foreach (var item in items)
