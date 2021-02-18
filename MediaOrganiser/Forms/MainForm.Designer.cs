@@ -48,7 +48,7 @@
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(221)))), ((int)(((byte)(221)))));
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int) (((byte) (221)))), ((int) (((byte) (221)))), ((int) (((byte) (221)))));
             this.panel1.Controls.Add(this.PnlAddButtonIndicator);
             this.panel1.Controls.Add(this.BtnAdd);
             this.panel1.Controls.Add(this.PnlExitButtonIndicator);
@@ -64,7 +64,7 @@
             // 
             // PnlAddButtonIndicator
             // 
-            this.PnlAddButtonIndicator.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(196)))), ((int)(((byte)(196)))), ((int)(((byte)(196)))));
+            this.PnlAddButtonIndicator.BackColor = System.Drawing.Color.FromArgb(((int) (((byte) (196)))), ((int) (((byte) (196)))), ((int) (((byte) (196)))));
             this.PnlAddButtonIndicator.Location = new System.Drawing.Point(0, 203);
             this.PnlAddButtonIndicator.Name = "PnlAddButtonIndicator";
             this.PnlAddButtonIndicator.Size = new System.Drawing.Size(7, 89);
@@ -75,7 +75,7 @@
             this.BtnAdd.Dock = System.Windows.Forms.DockStyle.Top;
             this.BtnAdd.FlatAppearance.BorderSize = 0;
             this.BtnAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnAdd.Font = new System.Drawing.Font("Microsoft Yi Baiti", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnAdd.Font = new System.Drawing.Font("Microsoft Yi Baiti", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
             this.BtnAdd.Location = new System.Drawing.Point(0, 203);
             this.BtnAdd.Name = "BtnAdd";
             this.BtnAdd.Size = new System.Drawing.Size(191, 89);
@@ -88,7 +88,7 @@
             // 
             // PnlExitButtonIndicator
             // 
-            this.PnlExitButtonIndicator.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(196)))), ((int)(((byte)(196)))), ((int)(((byte)(196)))));
+            this.PnlExitButtonIndicator.BackColor = System.Drawing.Color.FromArgb(((int) (((byte) (196)))), ((int) (((byte) (196)))), ((int) (((byte) (196)))));
             this.PnlExitButtonIndicator.Location = new System.Drawing.Point(0, 467);
             this.PnlExitButtonIndicator.Name = "PnlExitButtonIndicator";
             this.PnlExitButtonIndicator.Size = new System.Drawing.Size(7, 89);
@@ -96,7 +96,7 @@
             // 
             // PnlHomeButtonIndicator
             // 
-            this.PnlHomeButtonIndicator.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(58)))), ((int)(((byte)(211)))), ((int)(((byte)(0)))));
+            this.PnlHomeButtonIndicator.BackColor = System.Drawing.Color.FromArgb(((int) (((byte) (58)))), ((int) (((byte) (211)))), ((int) (((byte) (0)))));
             this.PnlHomeButtonIndicator.Location = new System.Drawing.Point(0, 114);
             this.PnlHomeButtonIndicator.Name = "PnlHomeButtonIndicator";
             this.PnlHomeButtonIndicator.Size = new System.Drawing.Size(7, 89);
@@ -107,7 +107,7 @@
             this.BtnExit.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.BtnExit.FlatAppearance.BorderSize = 0;
             this.BtnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnExit.Font = new System.Drawing.Font("Microsoft Yi Baiti", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnExit.Font = new System.Drawing.Font("Microsoft Yi Baiti", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
             this.BtnExit.Location = new System.Drawing.Point(0, 467);
             this.BtnExit.Name = "BtnExit";
             this.BtnExit.Size = new System.Drawing.Size(191, 89);
@@ -119,11 +119,11 @@
             // 
             // BtnHome
             // 
-            this.BtnHome.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.BtnHome.BackColor = System.Drawing.Color.FromArgb(((int) (((byte) (240)))), ((int) (((byte) (240)))), ((int) (((byte) (240)))));
             this.BtnHome.Dock = System.Windows.Forms.DockStyle.Top;
             this.BtnHome.FlatAppearance.BorderSize = 0;
             this.BtnHome.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnHome.Font = new System.Drawing.Font("Microsoft Yi Baiti", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnHome.Font = new System.Drawing.Font("Microsoft Yi Baiti", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
             this.BtnHome.Location = new System.Drawing.Point(0, 114);
             this.BtnHome.Name = "BtnHome";
             this.BtnHome.Size = new System.Drawing.Size(191, 89);
@@ -154,7 +154,7 @@
             // 
             this.LblTitle.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.LblTitle.AutoSize = true;
-            this.LblTitle.Font = new System.Drawing.Font("Microsoft Yi Baiti", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblTitle.Font = new System.Drawing.Font("Microsoft Yi Baiti", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
             this.LblTitle.Location = new System.Drawing.Point(269, 17);
             this.LblTitle.Name = "LblTitle";
             this.LblTitle.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -186,22 +186,21 @@
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             this.ResumeLayout(false);
-
         }
 
-        #endregion
-
+        private System.Windows.Forms.Button BtnAdd;
+        private System.Windows.Forms.Button BtnExit;
+        private System.Windows.Forms.Button BtnHome;
+        private System.Windows.Forms.Label LblTitle;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.Panel PnlFormLoader;
-        private System.Windows.Forms.Label LblTitle;
-        private System.Windows.Forms.Button BtnHome;
-        private System.Windows.Forms.Panel PnlHomeButtonIndicator;
-        private System.Windows.Forms.Button BtnExit;
-        private System.Windows.Forms.Panel PnlExitButtonIndicator;
         private System.Windows.Forms.Panel PnlAddButtonIndicator;
-        private System.Windows.Forms.Button BtnAdd;
+        private System.Windows.Forms.Panel PnlExitButtonIndicator;
+        private System.Windows.Forms.Panel PnlFormLoader;
+        private System.Windows.Forms.Panel PnlHomeButtonIndicator;
         private System.Windows.Forms.ToolTip TtMainMenu;
+
+        #endregion
     }
 }

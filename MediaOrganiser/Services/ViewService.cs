@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using MediaOrganiser.Modals;
 using System.Collections.Generic;
 using System.Drawing;
+using Image = System.Drawing.Image;
 
 namespace MediaOrganiser.Services
 {
@@ -28,21 +29,29 @@ namespace MediaOrganiser.Services
             fileManger.Items.Clear();
             if (currentDirectory.PlayList != null)
             {
-                fileManger.Items.Add("...", 1);
+                var backFolderItem = new ListViewItem()
+                {
+                    Text = "...",
+                    ImageIndex = 1,
+                    Tag = "backButton"
+                };
+                fileManger.Items.Add(backFolderItem);
             }
 
-            foreach (var item in items)
+            if (items != null)
             {
-                if (currentDirectory.PlayList != null && currentDirectory.Category != null)
+                foreach (var item in items)
                 {
-                    fileManger.Items.Add(item, 0);
-                }
-                else 
-                {
-                    fileManger.Items.Add(item, 1);
+                    if (currentDirectory.PlayList != null && currentDirectory.Category != null)
+                    {
+                        fileManger.Items.Add(item, 0);
+                    }
+                    else 
+                    {
+                        fileManger.Items.Add(item, 1);
+                    }
                 }
             }
-            
         }
 
         public void AddTextBoxAutoComplete(TextBox textBox, string[] suggestions)

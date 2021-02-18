@@ -11,8 +11,8 @@ namespace MediaOrganiser
     {
         private readonly IDataService dataService;
         private readonly IViewService viewService;
-        public Image selectedImage = new Image();
-        public string selectedMediaFile;
+        private Image selectedImage = new Image();
+        private string selectedMediaFile;
 
         public AddForm(IDataService dataService, IViewService viewService)
         {
@@ -20,7 +20,7 @@ namespace MediaOrganiser
             this.viewService = viewService;
             InitializeComponent();
             
-            var hashSetPlayLists = this.dataService.GetPlayLists();
+            var hashSetPlayLists = this.dataService.GetAllChildren(null, new CurrentDirectory());
             string[] arrayPlayLists = new string[hashSetPlayLists.Count];
             hashSetPlayLists.CopyTo(arrayPlayLists);
 
@@ -29,10 +29,15 @@ namespace MediaOrganiser
 
         private void TxtbxPlayList_TextChanged(object sender, EventArgs e)
         {
-            var hashSetPlayLists = this.dataService.GetPlayLists();
+            var hashSetPlayLists = dataService.GetAllChildren(null, new CurrentDirectory());
             if (hashSetPlayLists.Contains(TxtbxPlayList.Text))
             {
-                var hashSetCategories = this.dataService.GetAllChildren(TxtbxPlayList.Text, new CurrentDirectory());
+                var selectedItem = new ListViewItem()
+                {
+                    Text = TxtbxPlayList.Text
+                };
+                
+                var hashSetCategories = this.dataService.GetAllChildren(selectedItem, new CurrentDirectory());
                 string[] arrayCategories = new string[hashSetCategories.Count];
                 hashSetCategories.CopyTo(arrayCategories);
 

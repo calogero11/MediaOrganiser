@@ -13,6 +13,11 @@ namespace MediaOrganiser.Modals
             
         }
 
+        public CurrentDirectory(string playList)
+        {
+            PlayList = playList;
+        }
+
         public CurrentDirectory(string playList, string category)
         {
             PlayList = playList;

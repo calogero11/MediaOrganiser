@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using MediaOrganiser.Modals;
 using System.Collections.Generic;
+using System.Windows.Forms.VisualStyles;
 
 namespace MediaOrganiser
 {
@@ -9,8 +10,8 @@ namespace MediaOrganiser
     {
         private readonly IViewService viewService;
         private readonly IDataService dataService;
-        public string selectedItem;
-        public CurrentDirectory currentDirectory = new CurrentDirectory();
+        private ListViewItem selectedItem { get; set; }
+        private CurrentDirectory currentDirectory = new CurrentDirectory();
 
         public HomeForm(IViewService viewService,
             IDataService dataService)
@@ -22,7 +23,7 @@ namespace MediaOrganiser
 
         private void HomeForm_Load(object sender, System.EventArgs e)
         {
-            var playLists = dataService.GetPlayLists();
+            var playLists = dataService.GetAllChildren(null, currentDirectory);
             viewService.ShowFilesAndDirectories(playLists, FileManager, currentDirectory);
         }
 
@@ -47,36 +48,34 @@ namespace MediaOrganiser
 
         private void FileManager_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
-            selectedItem = e.Item.Text;
+            selectedItem = e.Item;
         }
 
         private void BtnAdd_Click(object sender, System.EventArgs e)
         {
             dataService.PostItemIndependently(TxtbxFileManager.Text, currentDirectory);
-            selectedItem = GetCurrentDirectory();
+            var selectedItem = GetCurrentDirectory();
             var storedItems = dataService.GetAllChildren(selectedItem, currentDirectory);
             viewService.ShowFilesAndDirectories(storedItems, FileManager, currentDirectory);
             viewService.ClearForm(new List<TextBox> { TxtbxFileManager });
         }
 
-        private string GetCurrentDirectory()
+        private ListViewItem GetCurrentDirectory()
         {
             if (currentDirectory.Category != null)
             {
                 var currentPosition = currentDirectory.Category;
                 currentDirectory.Category = null;
-                return currentPosition;
+                return new ListViewItem() { Text = currentPosition};
             }
             else if (currentDirectory.PlayList != null)
             {
                 var currentPosition = currentDirectory.PlayList;
                 currentDirectory.PlayList = null;
-                return currentPosition;
+                return new ListViewItem() { Text = currentPosition};
             }
-            else
-            {
-                return null;
-            }
+            
+            return null;
         }
 
         private void BtnRemove_Click(object sender, System.EventArgs e)
@@ -92,7 +91,7 @@ namespace MediaOrganiser
 
             if (confirmResult == DialogResult.Yes)
             {
-                dataService.RemoveItemIndependently(selectedItem, currentDirectory);
+                dataService.RemoveItemIndependently(selectedItem.Text, currentDirectory);
                 selectedItem = GetCurrentDirectory();
                 var storedItems = dataService.GetAllChildren(selectedItem, currentDirectory);
                 viewService.ShowFilesAndDirectories(storedItems, FileManager, currentDirectory);
@@ -101,10 +100,11 @@ namespace MediaOrganiser
 
         private void BtnEdit_Click(object sender, System.EventArgs e)
         {
-            dataService.UpdateItemIndependently(selectedItem, TxtbxFileManager.Text, currentDirectory);
+            dataService.UpdateItemIndependently(selectedItem.Text, TxtbxFileManager.Text, currentDirectory);
             selectedItem = GetCurrentDirectory();
             var storedItems = dataService.GetAllChildren(selectedItem, currentDirectory);
             viewService.ShowFilesAndDirectories(storedItems, FileManager, currentDirectory);
+            viewService.ClearForm(new List<TextBox> { TxtbxFileManager });
         }
 
         private void FileManager_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)

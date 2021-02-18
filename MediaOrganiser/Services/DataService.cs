@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Windows.Forms;
 using Newtonsoft.Json;
 
 namespace MediaOrganiser.Services
@@ -13,7 +14,7 @@ namespace MediaOrganiser.Services
     {
         public bool UpdateItemIndependently(string selectedItem, string newItemName, CurrentDirectory currentDirectory)
         {
-            if (newItemName != null || selectedItem == null)
+            if (newItemName != null && selectedItem != null)
             {
                 switch (currentDirectory)
                 {
@@ -34,10 +35,10 @@ namespace MediaOrganiser.Services
             var data = ReadData();
 
             var categories = data
-                .PlayLists
-                .FirstOrDefault(playList => playList.Name == playListName)
-                .MediaFiles
-                .SelectMany(mediaFile => mediaFile.Categories)
+                .PlayLists?
+                .FirstOrDefault(playList => playList.Name == playListName)?
+                .MediaFiles?
+                .SelectMany(mediaFile => mediaFile.Categories)?
                 .Where(category => category.Name == fromCatergoryName);
 
             if (categories != null)
@@ -58,7 +59,7 @@ namespace MediaOrganiser.Services
         {
             var data = ReadData();
 
-            if (data.PlayLists.FirstOrDefault(playList => playList.Name == fromPlayListName) != null)
+            if (data.PlayLists?.FirstOrDefault(playList => playList.Name == fromPlayListName) != null)
             {
                 data.PlayLists.FirstOrDefault(playList => playList.Name == fromPlayListName).Name = toPlayListName;
                 SaveChanges(data);
@@ -92,22 +93,24 @@ namespace MediaOrganiser.Services
             var data = ReadData();
 
             var mediaFiles = data
-              .PlayLists
-              .FirstOrDefault(playList => playList.Name == playListName)
+              .PlayLists?
+              .FirstOrDefault(playList => playList.Name == playListName)?
               .MediaFiles;
 
-            foreach(var mediaFile in mediaFiles)
+            if (mediaFiles != null)
             {
-                var selectedCategory = mediaFile.Categories.Find(category => category.Name == itemName);
-
-                if (selectedCategory != null)
+                foreach(var mediaFile in mediaFiles)
                 {
-                    mediaFile.Categories.Remove(selectedCategory);
-                    SaveChanges(data);
-                    return true;
+                    var selectedCategory = mediaFile.Categories.Find(category => category.Name == itemName);
+
+                    if (selectedCategory != null)
+                    {
+                        mediaFile.Categories.Remove(selectedCategory);
+                        SaveChanges(data);
+                        return true;
+                    }
                 }
             }
-
             return false;
         }
 
@@ -115,7 +118,7 @@ namespace MediaOrganiser.Services
         {
             var data = ReadData();
             
-            var selectedPlayList = data.PlayLists.FirstOrDefault(playList => playList.Name == itemName);
+            var selectedPlayList = data.PlayLists?.FirstOrDefault(playList => playList.Name == itemName);
             if (selectedPlayList != null)
             {
                 data.PlayLists.Remove(selectedPlayList);
@@ -128,15 +131,17 @@ namespace MediaOrganiser.Services
 
         public bool PostItemIndependently(string itemName, CurrentDirectory currentDirectory)
         {
-
-            switch (currentDirectory)
+            if (currentDirectory != null)
             {
-                case var x when x.Category != null:
-                    break;
-                case var x when x.PlayList != null:
-                    break;
-                default:
-                    return AddPlayList(itemName);
+                switch (currentDirectory)
+                {
+                    case var x when x.Category != null:
+                        break;
+                    case var x when x.PlayList != null:
+                        break;
+                    default:
+                        return AddPlayList(itemName);
+                }
             }
 
             return false;
@@ -147,22 +152,29 @@ namespace MediaOrganiser.Services
             var data = ReadData();
             bool isSaved;
 
-            if (data.PlayLists == null)
+            if (playListName != null)
             {
-                data.PlayLists = new List<PlayList>
+                if (data.PlayLists == null)
                 {
-                    new PlayList(playListName, null)
-                };
-                SaveChanges(data);
-                isSaved = true;
+                    data.PlayLists = new List<PlayList>
+                    {
+                        new PlayList(playListName, null)
+                    };
+                    SaveChanges(data);
+                    isSaved = true;
+                }
+                else
+                {
+                    data.PlayLists.Add(new PlayList(playListName, null));
+                    SaveChanges(data);
+                    isSaved = true;
+                }
             }
             else
             {
-                data.PlayLists.Add(new PlayList(playListName, null));
-                SaveChanges(data);
-                isSaved = true;
+                isSaved = false;
             }
-        
+            
             return isSaved;
         }
 
@@ -261,116 +273,147 @@ namespace MediaOrganiser.Services
         }
 
 
-        public HashSet<string> GetAllChildren(string selectedItem, CurrentDirectory currentDirecotory)
+        public HashSet<string> GetAllChildren(ListViewItem selectedItem, CurrentDirectory currentDirecotory)
         {
-            var data = ReadData();
-            var items = new HashSet<string>();
+            HashSet<string> items;
 
-            switch (currentDirecotory)
+            if (currentDirecotory != null)
             {
-                case var x when x.Category != null:
-                    if (selectedItem == "..." && selectedItem != null)
-                    {
-                        items = GetCategories(data, currentDirecotory.PlayList);
-                        currentDirecotory.Category = null;
-                    }
-                    else
-                    {
-                        items = GetFiles(data, currentDirecotory.PlayList, currentDirecotory.Category);
-                        OpenFile(data, currentDirecotory, selectedItem);
-                    }
+                switch (currentDirecotory)
+                {
+                    case var x when x.Category != null:
+                        if (selectedItem != null)
+                        {
+                            if (selectedItem.Tag == "backButton")
+                            {
+                                items = GetCategories(currentDirecotory.PlayList);
+                                currentDirecotory.Category = null;
+                            }
+                            else
+                            {
+                                items = GetFiles(currentDirecotory.PlayList, currentDirecotory.Category);
+                                if (items != null)
+                                {
+                                    OpenFile(currentDirecotory, selectedItem.Text);    
+                                }
+                            }
 
-                    return items;
-                case var x when x.PlayList != null:
-                    if (selectedItem != "..." && selectedItem != null)
-                    {
-                        items = GetFiles(data, currentDirecotory.PlayList, selectedItem);
-                        currentDirecotory.Category = selectedItem;
-                    }
-                    else
-                    {
-                        items = GetPlayLists();
-                        currentDirecotory.PlayList = null;
-                    }
+                            return items;
+                        }
+                      
+                        return null;
+                    case var x when x.PlayList != null:
+                        if (selectedItem != null)
+                        {
+                            if (selectedItem.Tag == "backButton")
+                            {
+                                items = GetPlayLists();
+                                currentDirecotory.PlayList = null;
+                            }
+                            else
+                            {
+                                items = GetFiles(currentDirecotory.PlayList, selectedItem.Text);
+                                currentDirecotory.Category = selectedItem.Text;
+                            }
 
-                    return items;
-                default:
-                    if (selectedItem != "..." && selectedItem != null)
-                    {
-                        items = GetCategories(data, selectedItem);
-                        currentDirecotory.PlayList = selectedItem;
-                    }
-                    else
-                    {
-                        items = GetPlayLists();
-                        currentDirecotory.PlayList = null;
-                    }
+                            return items;
+                        }
 
-                    return items;
+                        return null;
+                    default:
+                        if (selectedItem != null)
+                        {
+                            items = GetCategories(selectedItem.Text);
+                            currentDirecotory.PlayList = selectedItem.Text;
+                        }
+                        else
+                        {
+                            items = GetPlayLists();
+                            currentDirecotory.PlayList = null;
+                        }
+
+                        return items;
+                }
             }
+
+            return null;
         }
 
-        private void OpenFile(Data data, CurrentDirectory currentDirectory, string selectedItem)
+        private void OpenFile(CurrentDirectory currentDirectory, string selectedItem)
         {
+            var data = ReadData();
+            
             var selectedMediaFile = data
                 .PlayLists
                 .FirstOrDefault(x => x.Name == currentDirectory.PlayList)
-                .MediaFiles
+                ?.MediaFiles
                 .FirstOrDefault(MediaFile => MediaFile.Categories.Select(category => category.Name).Contains(currentDirectory.Category) &&
                 MediaFile.Name == selectedItem);
 
             Process.Start($"{selectedMediaFile.Path}\\{selectedMediaFile.Name}");
         }
 
-        private HashSet<string> GetFiles(Data data, string playListName, string selectedItem)
+        private HashSet<string> GetFiles(string playListName, string selectedItem)
         {
+            var data = ReadData();
             var items = new List<string>();
 
             var mediaFiles = data
-                .PlayLists
-                .FirstOrDefault(playList => playList.Name == playListName)
+                .PlayLists?
+                .FirstOrDefault(playList => playList.Name == playListName)?
                 .MediaFiles;
 
-
-            foreach (var mediaFile in mediaFiles)
+            if (mediaFiles != null)
             {
-                if ((mediaFile.Categories == null || mediaFile.Categories.Count == 0) && selectedItem == "Unknown")
+                foreach (var mediaFile in mediaFiles)
                 {
-                    items.Add(mediaFile.Name);
+                    if ((mediaFile.Categories == null || mediaFile.Categories.Count == 0) && selectedItem == "Unknown")
+                    {
+                        items.Add(mediaFile.Name);
+                    }
+                    else if (mediaFile.Categories != null && mediaFile.Categories.Select(category => category.Name).Contains(selectedItem))
+                    {
+                        items.Add(mediaFile.Name);
+                    }
                 }
-                else if (mediaFile.Categories != null && mediaFile.Categories.Select(category => category.Name).Contains(selectedItem))
-                {
-                    items.Add(mediaFile.Name);
-                }
+
+                return new HashSet<string>(items);
             }
 
-            return new HashSet<string>(items);
+            return null;
         }
 
-        private HashSet<string> GetCategories(Data data, string selectedItem)
+        private HashSet<string> GetCategories(string selectedItem)
         {
+            var data = ReadData();
             var items = new List<string>();
 
             var mediaFiles = data
-                .PlayLists
-                .FirstOrDefault(playList => playList.Name == selectedItem).MediaFiles;
+                .PlayLists?
+                .FirstOrDefault(playList => playList.Name == selectedItem)?
+                .MediaFiles;
 
-            foreach (var mediaFile in mediaFiles)
+            if (mediaFiles != null)
             {
-                if (mediaFile.Categories == null || mediaFile.Categories.Count == 0)
+                foreach (var mediaFile in mediaFiles)
                 {
-                    items.Add("Unknown");
+                    if (mediaFile.Categories == null || mediaFile.Categories.Count == 0)
+                    {
+                        items.Add("Unknown");
+                    }
+                    else
+                    {
+                        items.AddRange(mediaFile.Categories.Select(x => x.Name));
+                    }
                 }
-                else
-                {
-                    items.AddRange(mediaFile.Categories.Select(x => x.Name));
-                }
+                
+                return new HashSet<string>(items);
             }
 
-            return new HashSet<string>(items);
+            return null;
         }
 
-        public HashSet<string> GetPlayLists()
+        private HashSet<string> GetPlayLists()
         {
             var data = ReadData();
 
@@ -381,9 +424,11 @@ namespace MediaOrganiser.Services
                 data
                 .PlayLists?
                 .Select(PlayList => PlayList.Name));
+                
+                return new HashSet<string>(items);
             }
 
-            return new HashSet<string>(items);
+            return null;
         }
 
         private Data ReadData()

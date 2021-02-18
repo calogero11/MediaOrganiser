@@ -47,7 +47,7 @@
             // 
             // TxtbxPlayList
             // 
-            this.TxtbxPlayList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.TxtbxPlayList.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.TxtbxPlayList.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.TxtbxPlayList.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.TxtbxPlayList.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -60,7 +60,7 @@
             // 
             // TxtbxCategory
             // 
-            this.TxtbxCategory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.TxtbxCategory.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.TxtbxCategory.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.TxtbxCategory.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.TxtbxCategory.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -72,7 +72,7 @@
             // 
             // TxtbxImage
             // 
-            this.TxtbxImage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.TxtbxImage.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.TxtbxImage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.TxtbxImage.ForeColor = System.Drawing.SystemColors.WindowFrame;
             this.TxtbxImage.Location = new System.Drawing.Point(150, 206);
@@ -83,7 +83,7 @@
             // 
             // TxtbxMediaFile
             // 
-            this.TxtbxMediaFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.TxtbxMediaFile.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.TxtbxMediaFile.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.TxtbxMediaFile.ForeColor = System.Drawing.SystemColors.WindowFrame;
             this.TxtbxMediaFile.Location = new System.Drawing.Point(150, 274);
@@ -94,7 +94,7 @@
             // 
             // label1
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(101, 93);
             this.label1.Name = "label1";
@@ -105,7 +105,7 @@
             // 
             // label2
             // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(95, 148);
             this.label2.Name = "label2";
@@ -116,7 +116,7 @@
             // 
             // label3
             // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(108, 210);
             this.label3.Name = "label3";
@@ -127,7 +127,7 @@
             // 
             // label4
             // 
-            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(92, 278);
             this.label4.Name = "label4";
@@ -138,7 +138,7 @@
             // 
             // TxtbxComment
             // 
-            this.TxtbxComment.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.TxtbxComment.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.TxtbxComment.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.TxtbxComment.ForeColor = System.Drawing.SystemColors.WindowFrame;
             this.TxtbxComment.Location = new System.Drawing.Point(150, 333);
@@ -148,7 +148,7 @@
             // 
             // label5
             // 
-            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(93, 337);
             this.label5.Name = "label5";
@@ -162,7 +162,7 @@
             this.BtnSelectMediaFile.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.BtnSelectMediaFile.BackColor = System.Drawing.Color.Transparent;
             this.BtnSelectMediaFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnSelectMediaFile.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.BtnSelectMediaFile.ForeColor = System.Drawing.Color.FromArgb(((int) (((byte) (64)))), ((int) (((byte) (64)))), ((int) (((byte) (64)))));
             this.BtnSelectMediaFile.Location = new System.Drawing.Point(415, 274);
             this.BtnSelectMediaFile.Name = "BtnSelectMediaFile";
             this.BtnSelectMediaFile.Size = new System.Drawing.Size(66, 20);
@@ -176,10 +176,10 @@
             this.BtnSelectImage.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.BtnSelectImage.BackColor = System.Drawing.Color.Transparent;
             this.BtnSelectImage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnSelectImage.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnSelectImage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.BtnSelectImage.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+            this.BtnSelectImage.ForeColor = System.Drawing.Color.FromArgb(((int) (((byte) (64)))), ((int) (((byte) (64)))), ((int) (((byte) (64)))));
             this.BtnSelectImage.Location = new System.Drawing.Point(415, 206);
-            this.BtnSelectImage.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
+            this.BtnSelectImage.Margin = new System.Windows.Forms.Padding(0);
             this.BtnSelectImage.Name = "BtnSelectImage";
             this.BtnSelectImage.Size = new System.Drawing.Size(65, 20);
             this.BtnSelectImage.TabIndex = 11;
@@ -191,7 +191,7 @@
             // 
             this.BtnAdd.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.BtnAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnAdd.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.BtnAdd.ForeColor = System.Drawing.Color.FromArgb(((int) (((byte) (64)))), ((int) (((byte) (64)))), ((int) (((byte) (64)))));
             this.BtnAdd.Location = new System.Drawing.Point(271, 399);
             this.BtnAdd.Name = "BtnAdd";
             this.BtnAdd.Size = new System.Drawing.Size(75, 23);
@@ -230,24 +230,23 @@
             this.Name = "AddForm";
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
-        #endregion
-
-        private System.Windows.Forms.TextBox TxtbxPlayList;
-        private System.Windows.Forms.TextBox TxtbxCategory;
-        private System.Windows.Forms.TextBox TxtbxImage;
-        private System.Windows.Forms.TextBox TxtbxMediaFile;
+        private System.Windows.Forms.Button BtnAdd;
+        private System.Windows.Forms.Button BtnSelectImage;
+        private System.Windows.Forms.Button BtnSelectMediaFile;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox TxtbxComment;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Button BtnSelectMediaFile;
-        private System.Windows.Forms.Button BtnSelectImage;
-        private System.Windows.Forms.Button BtnAdd;
         private System.Windows.Forms.Label LblOutcome;
+        private System.Windows.Forms.TextBox TxtbxCategory;
+        private System.Windows.Forms.TextBox TxtbxComment;
+        private System.Windows.Forms.TextBox TxtbxImage;
+        private System.Windows.Forms.TextBox TxtbxMediaFile;
+        private System.Windows.Forms.TextBox TxtbxPlayList;
+
+        #endregion
     }
 }

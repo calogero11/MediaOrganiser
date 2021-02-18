@@ -1,5 +1,6 @@
 ﻿using System.Windows.Forms;
 using MediaOrganiser.Interfaces;
+using MediaOrganiser.Modals;
 using MediaOrganiser.Services;
 
 namespace MediaOrganiser
@@ -17,7 +18,7 @@ namespace MediaOrganiser
 
             InitializeComponent();
 
-            if (dataService.GetPlayLists() == null)
+            if (dataService.GetAllChildren(null, new CurrentDirectory()) == null)
             {
                 viewService.UpdateView(LblTitle, new EmptyHomeForm(), PnlFormLoader);
             }
@@ -33,7 +34,7 @@ namespace MediaOrganiser
         {
             activeMenuButton = viewService.ActivateButton(activeMenuButton.Item1, activeMenuButton.Item2, BtnHome, PnlHomeButtonIndicator);
           
-            if (dataService.GetPlayLists() == null)
+            if (dataService.GetAllChildren(null, new CurrentDirectory()) == null)
             {
                 viewService.UpdateView(LblTitle, new EmptyHomeForm(), PnlFormLoader);
             }

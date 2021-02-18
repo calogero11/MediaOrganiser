@@ -46,7 +46,7 @@
             // 
             // iconList
             // 
-            this.iconList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("iconList.ImageStream")));
+            this.iconList.ImageStream = ((System.Windows.Forms.ImageListStreamer) (resources.GetObject("iconList.ImageStream")));
             this.iconList.TransparentColor = System.Drawing.Color.Transparent;
             this.iconList.Images.SetKeyName(0, "file.png");
             this.iconList.Images.SetKeyName(1, "folder.png");
@@ -67,7 +67,7 @@
             // 
             this.TxtbxFileManager.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.TxtbxFileManager.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TxtbxFileManager.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TxtbxFileManager.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
             this.TxtbxFileManager.Location = new System.Drawing.Point(0, 0);
             this.TxtbxFileManager.Name = "TxtbxFileManager";
             this.TxtbxFileManager.Size = new System.Drawing.Size(526, 30);
@@ -77,7 +77,7 @@
             // 
             this.BtnEdit.Dock = System.Windows.Forms.DockStyle.Right;
             this.BtnEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
             this.BtnEdit.Location = new System.Drawing.Point(526, 0);
             this.BtnEdit.Name = "BtnEdit";
             this.BtnEdit.Size = new System.Drawing.Size(31, 31);
@@ -90,7 +90,7 @@
             // 
             this.BtnRemove.Dock = System.Windows.Forms.DockStyle.Right;
             this.BtnRemove.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnRemove.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnRemove.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
             this.BtnRemove.Location = new System.Drawing.Point(557, 0);
             this.BtnRemove.Name = "BtnRemove";
             this.BtnRemove.Size = new System.Drawing.Size(31, 31);
@@ -103,7 +103,7 @@
             // 
             this.BtnAdd.Dock = System.Windows.Forms.DockStyle.Right;
             this.BtnAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
             this.BtnAdd.Location = new System.Drawing.Point(588, 0);
             this.BtnAdd.Name = "BtnAdd";
             this.BtnAdd.Size = new System.Drawing.Size(31, 31);
@@ -161,20 +161,20 @@
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
-
         }
+
+        private System.Windows.Forms.Button BtnAdd;
+        private System.Windows.Forms.Button BtnEdit;
+        private System.Windows.Forms.Button BtnRemove;
+        private System.Windows.Forms.ListView FileManager;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.ImageList iconList;
+        private System.Windows.Forms.Label LblCurrentDirectory;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.TextBox TxtbxFileManager;
 
         #endregion
         private System.Windows.Forms.Label LblNoFiles;
         private System.Windows.Forms.PictureBox ImgFile;
-        private System.Windows.Forms.ImageList iconList;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.ListView FileManager;
-        private System.Windows.Forms.TextBox TxtbxFileManager;
-        private System.Windows.Forms.Button BtnEdit;
-        private System.Windows.Forms.Button BtnRemove;
-        private System.Windows.Forms.Button BtnAdd;
-        private System.Windows.Forms.Label LblCurrentDirectory;
     }
 }
