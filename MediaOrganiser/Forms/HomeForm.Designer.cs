@@ -40,13 +40,14 @@
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.LblCurrentDirectory = new System.Windows.Forms.Label();
             this.FileManager = new System.Windows.Forms.ListView();
+            this.TtHome = new System.Windows.Forms.ToolTip(this.components);
             this.panel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // iconList
             // 
-            this.iconList.ImageStream = ((System.Windows.Forms.ImageListStreamer) (resources.GetObject("iconList.ImageStream")));
+            this.iconList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("iconList.ImageStream")));
             this.iconList.TransparentColor = System.Drawing.Color.Transparent;
             this.iconList.Images.SetKeyName(0, "file.png");
             this.iconList.Images.SetKeyName(1, "folder.png");
@@ -67,7 +68,7 @@
             // 
             this.TxtbxFileManager.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.TxtbxFileManager.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TxtbxFileManager.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+            this.TxtbxFileManager.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtbxFileManager.Location = new System.Drawing.Point(0, 0);
             this.TxtbxFileManager.Name = "TxtbxFileManager";
             this.TxtbxFileManager.Size = new System.Drawing.Size(526, 30);
@@ -77,7 +78,7 @@
             // 
             this.BtnEdit.Dock = System.Windows.Forms.DockStyle.Right;
             this.BtnEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+            this.BtnEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnEdit.Location = new System.Drawing.Point(526, 0);
             this.BtnEdit.Name = "BtnEdit";
             this.BtnEdit.Size = new System.Drawing.Size(31, 31);
@@ -90,7 +91,7 @@
             // 
             this.BtnRemove.Dock = System.Windows.Forms.DockStyle.Right;
             this.BtnRemove.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnRemove.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+            this.BtnRemove.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnRemove.Location = new System.Drawing.Point(557, 0);
             this.BtnRemove.Name = "BtnRemove";
             this.BtnRemove.Size = new System.Drawing.Size(31, 31);
@@ -103,7 +104,7 @@
             // 
             this.BtnAdd.Dock = System.Windows.Forms.DockStyle.Right;
             this.BtnAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+            this.BtnAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnAdd.Location = new System.Drawing.Point(588, 0);
             this.BtnAdd.Name = "BtnAdd";
             this.BtnAdd.Size = new System.Drawing.Size(31, 31);
@@ -138,6 +139,7 @@
             this.FileManager.LargeImageList = this.iconList;
             this.FileManager.Location = new System.Drawing.Point(0, 31);
             this.FileManager.Name = "FileManager";
+            this.FileManager.ShowItemToolTips = true;
             this.FileManager.Size = new System.Drawing.Size(619, 379);
             this.FileManager.SmallImageList = this.iconList;
             this.FileManager.TabIndex = 0;
@@ -148,6 +150,7 @@
             // 
             // HomeForm
             // 
+            this.AcceptButton = this.BtnAdd;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(619, 443);
             this.Controls.Add(this.FileManager);
@@ -161,6 +164,7 @@
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
+
         }
 
         private System.Windows.Forms.Button BtnAdd;
@@ -176,5 +180,6 @@
         #endregion
         private System.Windows.Forms.Label LblNoFiles;
         private System.Windows.Forms.PictureBox ImgFile;
+        private System.Windows.Forms.ToolTip TtHome;
     }
 }

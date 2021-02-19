@@ -1,6 +1,6 @@
 ﻿namespace MediaOrganiser
 {
-    partial class AddForm
+    partial class EditForm
     {
         /// <summary>
         /// Required designer variable.
@@ -41,7 +41,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.BtnSelectMediaFile = new System.Windows.Forms.Button();
             this.BtnSelectImage = new System.Windows.Forms.Button();
-            this.BtnAdd = new System.Windows.Forms.Button();
+            this.BtnUpdate = new System.Windows.Forms.Button();
             this.LblOutcome = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -69,6 +69,7 @@
             this.TxtbxCategory.Name = "TxtbxCategory";
             this.TxtbxCategory.Size = new System.Drawing.Size(330, 20);
             this.TxtbxCategory.TabIndex = 1;
+            this.TxtbxCategory.TextChanged += new System.EventHandler(this.TxtbxCategory_TextChanged);
             // 
             // TxtbxImage
             // 
@@ -80,6 +81,7 @@
             this.TxtbxImage.ReadOnly = true;
             this.TxtbxImage.Size = new System.Drawing.Size(330, 20);
             this.TxtbxImage.TabIndex = 2;
+            this.TxtbxImage.TextChanged += new System.EventHandler(this.TxtbxImage_TextChanged);
             // 
             // TxtbxMediaFile
             // 
@@ -91,6 +93,7 @@
             this.TxtbxMediaFile.ReadOnly = true;
             this.TxtbxMediaFile.Size = new System.Drawing.Size(330, 20);
             this.TxtbxMediaFile.TabIndex = 3;
+            this.TxtbxMediaFile.TextChanged += new System.EventHandler(this.TxtbxMediaFile_TextChanged);
             // 
             // label1
             // 
@@ -187,18 +190,18 @@
             this.BtnSelectImage.UseVisualStyleBackColor = false;
             this.BtnSelectImage.Click += new System.EventHandler(this.BtnSelectImage_Click);
             // 
-            // BtnAdd
+            // BtnUpdate
             // 
-            this.BtnAdd.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.BtnAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnAdd.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.BtnAdd.Location = new System.Drawing.Point(271, 399);
-            this.BtnAdd.Name = "BtnAdd";
-            this.BtnAdd.Size = new System.Drawing.Size(75, 23);
-            this.BtnAdd.TabIndex = 12;
-            this.BtnAdd.Text = "Add";
-            this.BtnAdd.UseVisualStyleBackColor = true;
-            this.BtnAdd.Click += new System.EventHandler(this.BtnAdd_Click);
+            this.BtnUpdate.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.BtnUpdate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnUpdate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.BtnUpdate.Location = new System.Drawing.Point(271, 399);
+            this.BtnUpdate.Name = "BtnUpdate";
+            this.BtnUpdate.Size = new System.Drawing.Size(75, 23);
+            this.BtnUpdate.TabIndex = 12;
+            this.BtnUpdate.Text = "Update";
+            this.BtnUpdate.UseVisualStyleBackColor = true;
+            this.BtnUpdate.Click += new System.EventHandler(this.BtnUpdate_Click);
             // 
             // LblOutcome
             // 
@@ -208,13 +211,13 @@
             this.LblOutcome.Size = new System.Drawing.Size(0, 13);
             this.LblOutcome.TabIndex = 13;
             // 
-            // AddForm
+            // EditForm
             // 
-            this.AcceptButton = this.BtnAdd;
+            this.AcceptButton = this.BtnUpdate;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(635, 482);
             this.Controls.Add(this.LblOutcome);
-            this.Controls.Add(this.BtnAdd);
+            this.Controls.Add(this.BtnUpdate);
             this.Controls.Add(this.BtnSelectImage);
             this.Controls.Add(this.BtnSelectMediaFile);
             this.Controls.Add(this.label5);
@@ -228,15 +231,15 @@
             this.Controls.Add(this.TxtbxCategory);
             this.Controls.Add(this.TxtbxPlayList);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "AddForm";
+            this.Name = "EditForm";
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
-        private System.Windows.Forms.Button BtnAdd;
         private System.Windows.Forms.Button BtnSelectImage;
         private System.Windows.Forms.Button BtnSelectMediaFile;
+        private System.Windows.Forms.Button BtnUpdate;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;

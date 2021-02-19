@@ -18,13 +18,16 @@ namespace MediaOrganiser
 
             InitializeComponent();
 
+
+            viewService.SetUpFormLoader(LblTitle, PnlFormLoader);
+
             if (dataService.GetAllChildren(null, new CurrentDirectory()) == null)
             {
-                viewService.UpdateView(LblTitle, new EmptyHomeForm(), PnlFormLoader);
+                viewService.UpdateView(new EmptyHomeForm());
             }
             else
             {
-                viewService.UpdateView(LblTitle, new HomeForm(viewService, dataService), PnlFormLoader);
+                viewService.UpdateView(new HomeForm(viewService, dataService));
             }
 
             activeMenuButton = (BtnHome, PnlHomeButtonIndicator);
@@ -32,21 +35,29 @@ namespace MediaOrganiser
 
         private void BtnHome_Click(object sender, System.EventArgs e)
         {
-            activeMenuButton = viewService.ActivateButton(activeMenuButton.Item1, activeMenuButton.Item2, BtnHome, PnlHomeButtonIndicator);
+            var activateButtonResult = viewService.ActivateButton(activeMenuButton.Item1, activeMenuButton.Item2, BtnHome, PnlHomeButtonIndicator);
+            if (activateButtonResult.Item1 != null || activateButtonResult.Item2 != null)
+            {
+                activeMenuButton = activateButtonResult;
+            }
           
             if (dataService.GetAllChildren(null, new CurrentDirectory()) == null)
             {
-                viewService.UpdateView(LblTitle, new EmptyHomeForm(), PnlFormLoader);
+                viewService.UpdateView(new EmptyHomeForm());
             }
             else
             {
-                viewService.UpdateView(LblTitle, new HomeForm(viewService, dataService), PnlFormLoader);
+                viewService.UpdateView(new HomeForm(viewService, dataService));
             }
         }
 
         private void BtnExit_Click(object sender, System.EventArgs e)
         {
-            activeMenuButton = viewService.ActivateButton(activeMenuButton.Item1, activeMenuButton.Item2, BtnExit, PnlExitButtonIndicator);
+            var activateButtonResult = viewService.ActivateButton(activeMenuButton.Item1, activeMenuButton.Item2, BtnExit, PnlExitButtonIndicator);
+            if (activateButtonResult.Item1 != null || activateButtonResult.Item2 != null)
+            {
+                activeMenuButton = activateButtonResult;
+            }
             Application.Exit();
         }
 
@@ -57,8 +68,12 @@ namespace MediaOrganiser
 
         private void BtnAdd_Click(object sender, System.EventArgs e)
         {
-            activeMenuButton = viewService.ActivateButton(activeMenuButton.Item1, activeMenuButton.Item2, BtnAdd, PnlAddButtonIndicator);
-            viewService.UpdateView(LblTitle, new AddForm(dataService, viewService), PnlFormLoader);
+            var activateButtonResult = viewService.ActivateButton(activeMenuButton.Item1, activeMenuButton.Item2, BtnAdd, PnlAddButtonIndicator);
+            if (activateButtonResult.Item1 != null || activateButtonResult.Item2 != null)
+            {
+                activeMenuButton = activateButtonResult;
+            }
+            viewService.UpdateView(new AddForm(dataService, viewService));
         }
     }
 }
