@@ -24,6 +24,20 @@ namespace MediaOrganiser.Services
             }
         }
 
+        public string[] GetAllCategories(string selectedItem, CurrentDirectory currentDirectory)
+        {
+            var data = ReadData();
+
+            return data.
+                PlayLists?
+               .FirstOrDefault(playList => playList.Name == currentDirectory.PlayList)?
+               .MediaFiles?
+               .FirstOrDefault(mediaFile => mediaFile.Name == selectedItem)?
+               .Categories?
+               .Select(category => category.Name)?
+               .ToArray();
+        }
+
         private bool UpdateMediaFile(PlayList fromPlayList, PlayList toPlayList)
         {
             var data = ReadData();
@@ -74,7 +88,7 @@ namespace MediaOrganiser.Services
                 SaveChanges(data);
 
                 PostFiles(toPlayList.Name,
-                    toPlayList.MediaFiles.First().Categories.First().Name,
+                    toPlayList.MediaFiles.First().Categories.Select(category => category.Name).ToArray(),
                     toPlayList.MediaFiles.First().Name,
                     toPlayList.MediaFiles.First().Image,
                     toPlayList.MediaFiles.First().Comment);
@@ -186,7 +200,7 @@ namespace MediaOrganiser.Services
         public bool RemoveItemIndependently(string itemName, CurrentDirectory currentDirectory)
         {
 
-            if (itemName != null)
+            if (itemName != null && currentDirectory != null)
             {
                 switch (currentDirectory)
                 {
@@ -291,7 +305,7 @@ namespace MediaOrganiser.Services
         {
             var data = ReadData();
 
-            if (playListName != null && !PlayListExists(playListName))
+            if (!string.IsNullOrWhiteSpace(playListName) && !PlayListExists(playListName))
             {
                 if (data.PlayLists == null)
                 {
@@ -320,7 +334,122 @@ namespace MediaOrganiser.Services
             File.WriteAllText(@"..\..\Data\Data.json", json);
         }
 
-        public bool PostFiles(string playListName, string categoryName, string mediaFilePath, Image image, string comment)
+        // public bool PostFiles(string playListName, string categoryName, string mediaFilePath, Image image, string comment)
+        // {
+        //     var data = ReadData();
+        // 
+        //     if (string.IsNullOrWhiteSpace(playListName))
+        //     {
+        //         MessageBox.Show("Playlist field can not be empty", "Invalid", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+        //         return false;
+        //     }
+        //     if (string.IsNullOrWhiteSpace(mediaFilePath))
+        //     {
+        //         MessageBox.Show("media file field can not be empty", "Invalid", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+        //         return false;
+        //     }
+        //     if (FileExists(playListName, new FileInfo(mediaFilePath).Name))
+        //     {
+        //         MessageBox.Show("media file already exists", "Invalid", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+        //         return false;
+        //     }
+        // 
+        //     var fileInfo = new FileInfo(mediaFilePath);
+        // 
+        //     var playLists = data.PlayLists; 
+        //     if (playLists == null)
+        //     {
+        //         data.PlayLists =
+        //         new List<PlayList> {
+        //             new PlayList(
+        //                 playListName,
+        //                 new List<MediaFile>
+        //                 {
+        //                     new MediaFile(
+        //                         fileInfo.Name,
+        //                         fileInfo.DirectoryName,
+        //                         fileInfo.Extension,
+        //                         null,
+        //                         new Image(),
+        //                         new List<Category>()
+        //                     )
+        //                 }
+        //             )
+        //         };
+        //     }
+        //     else if (playLists.Select(playList => playList.Name).Contains(playListName))
+        //     {
+        //         data.
+        //         PlayLists
+        //             .FirstOrDefault(playList => playList.Name == playListName)?
+        //             .MediaFiles?
+        //             .Add(
+        //                 new MediaFile(
+        //                     fileInfo.Name,
+        //                     fileInfo.DirectoryName,
+        //                     fileInfo.Extension,
+        //                     null,
+        //                     new Image(),
+        //                     new List<Category>()
+        //                 )
+        //             );
+        //     }
+        //     else
+        //     {
+        //         data.PlayLists.Add(
+        //             new PlayList(
+        //                 playListName,
+        //                 new List<MediaFile> 
+        //                 {
+        //                     new MediaFile(
+        //                         fileInfo.Name,
+        //                         fileInfo.DirectoryName,
+        //                         fileInfo.Extension,
+        //                         null,
+        //                         new Image(),
+        //                         new List<Category>()
+        //                     ) 
+        //                 }
+        //             )
+        //         );
+        // 
+        //     }
+        // 
+        //     if (!string.IsNullOrWhiteSpace(categoryName))
+        //     {
+        //         data
+        //             .PlayLists
+        //             .FirstOrDefault(playList => playList.Name == playListName)
+        //             .MediaFiles
+        //             .FirstOrDefault(mediaFile => mediaFile.Name == fileInfo.Name)
+        //             .Categories.Add(new Category(categoryName));
+        //     }
+        //     if (!string.IsNullOrWhiteSpace(image?.Name))
+        //     {
+        //         data
+        //           .PlayLists
+        //           .FirstOrDefault(playList => playList.Name == playListName)
+        //           .MediaFiles
+        //           .FirstOrDefault(mediaFile => mediaFile.Name == fileInfo.Name)
+        //           .Image = image;
+        //     }
+        //     if (!string.IsNullOrWhiteSpace(comment))
+        //     {
+        //         data
+        //        .PlayLists
+        //        .FirstOrDefault(playList => playList.Name == playListName)
+        //        .MediaFiles
+        //        .FirstOrDefault(mediaFile => mediaFile.Name == fileInfo.Name)
+        //        .Comment = comment;
+        //     }
+        // 
+        //     SaveChanges(data);
+        // 
+        //     return true;
+        // }
+        // 
+
+        public bool PostFiles(string playListName, string[] categoryNames, string mediaFilePath, Image image, string comment)
         {
             var data = ReadData();
 
@@ -342,7 +471,7 @@ namespace MediaOrganiser.Services
 
             var fileInfo = new FileInfo(mediaFilePath);
 
-            var playLists = data.PlayLists; 
+            var playLists = data.PlayLists;
             if (playLists == null)
             {
                 data.PlayLists =
@@ -385,7 +514,7 @@ namespace MediaOrganiser.Services
                 data.PlayLists.Add(
                     new PlayList(
                         playListName,
-                        new List<MediaFile> 
+                        new List<MediaFile>
                         {
                             new MediaFile(
                                 fileInfo.Name,
@@ -394,21 +523,27 @@ namespace MediaOrganiser.Services
                                 null,
                                 new Image(),
                                 new List<Category>()
-                            ) 
+                            )
                         }
                     )
                 );
 
             }
 
-            if (!string.IsNullOrWhiteSpace(categoryName))
+            if (categoryNames != null)
             {
-                data
-                    .PlayLists
-                    .FirstOrDefault(playList => playList.Name == playListName)
-                    .MediaFiles
-                    .FirstOrDefault(mediaFile => mediaFile.Name == fileInfo.Name)
-                    .Categories.Add(new Category(categoryName));
+                foreach (var categoryName in categoryNames)
+                {
+                    if (!string.IsNullOrWhiteSpace(categoryName))
+                    {
+                        data
+                            .PlayLists
+                            .FirstOrDefault(playList => playList.Name == playListName)
+                            .MediaFiles
+                            .FirstOrDefault(mediaFile => mediaFile.Name == fileInfo.Name)
+                            .Categories.Add(new Category(categoryName));
+                    }
+                }
             }
             if (!string.IsNullOrWhiteSpace(image?.Name))
             {
@@ -433,6 +568,12 @@ namespace MediaOrganiser.Services
 
             return true;
         }
+
+
+
+
+
+
 
         private bool PlayListExists(string playListName)
         {
