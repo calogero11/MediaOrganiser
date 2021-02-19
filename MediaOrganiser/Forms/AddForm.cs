@@ -82,7 +82,9 @@ namespace MediaOrganiser
 
         private void BtnAdd_Click(object sender, EventArgs e)
         {
-            var successfulPost = dataService.PostFiles(TxtbxPlayList.Text, TxtbxCategory.Text, selectedMediaFile, selectedImage, TxtbxComment.Text);
+            var categories = TxtbxCategory.Text.Split(' ');
+            
+            var successfulPost = dataService.PostFiles(TxtbxPlayList.Text,categories, selectedMediaFile, selectedImage, TxtbxComment.Text);
 
             if (successfulPost)
             {

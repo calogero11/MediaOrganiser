@@ -113,7 +113,7 @@ namespace MediaOrganiser
 
             if (confirmResult == DialogResult.Yes)
             {
-                dataService.RemoveItemIndependently(selectedItem.Text, currentDirectory);
+                dataService.RemoveItemIndependently(selectedItem?.Text, currentDirectory);
                 RefreshFileManager();
             }
         }

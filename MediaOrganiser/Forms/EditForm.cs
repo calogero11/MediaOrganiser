@@ -40,15 +40,25 @@ namespace MediaOrganiser
 
         private PlayList SetCurrentPlayListInfo(string selectedMediaFile)
         {
-            var category = new Category(currentDirectory.Category);
-            var mediaFile = new MediaFile(selectedMediaFile, selectedMediaFilePath, new FileInfo(selectedMediaFilePath).Extension, dataService.GetFileComment(selectedMediaFile, currentDirectory), selectedImage, new List<Category> { category });
+            var categoryList = new List<Category>();
+            var categoryNameArray = dataService.GetAllCategories(selectedMediaFile, currentDirectory);
+
+            if (categoryNameArray != null)
+            {
+                foreach (var categoryName in categoryNameArray)
+                {
+                    categoryList.Add(new Category(categoryName));
+                }
+            }
+
+            var mediaFile = new MediaFile(selectedMediaFile, selectedMediaFilePath, new FileInfo(selectedMediaFilePath).Extension, dataService.GetFileComment(selectedMediaFile, currentDirectory), selectedImage, categoryList);
             return new PlayList(currentDirectory.PlayList, new List<MediaFile> { mediaFile });
         }
 
         private void SetFormInfo(string selectedMediaFile)
         {
             TxtbxPlayList.Text = currentDirectory?.PlayList;
-            TxtbxCategory.Text = currentDirectory?.Category;
+            TxtbxCategory.Text = string.Join(" ", dataService.GetAllCategories(selectedMediaFile, currentDirectory));
             TxtbxImage.Text = selectedImage?.Name;
             TxtbxMediaFile.Text = selectedMediaFile;
             TxtbxComment.Text = dataService.GetFileComment(selectedMediaFile, currentDirectory);
@@ -108,9 +118,21 @@ namespace MediaOrganiser
 
         private void BtnUpdate_Click(object sender, EventArgs e)
         {
-            var category = new Category(TxtbxCategory.Text);
-            var mediaFile = new MediaFile(TxtbxMediaFile.Text, selectedMediaFilePath, new FileInfo(selectedMediaFilePath).Extension, TxtbxComment.Text, selectedImage, new List<Category> { category });
+            var categoryList = new List<Category>();
+           
+            var categoryNameArray = TxtbxCategory.Text.Split(' ');
+
+            if (categoryNameArray != null)
+            {
+                foreach (var categoryName in categoryNameArray)
+                {
+                    categoryList.Add(new Category(categoryName));
+                }
+            }
+
+            var mediaFile = new MediaFile(TxtbxMediaFile.Text, selectedMediaFilePath, new FileInfo(selectedMediaFilePath).Extension, TxtbxComment.Text, selectedImage, categoryList);
             var toPlayList = new PlayList(TxtbxPlayList.Text, new List<MediaFile> { mediaFile });
+
             var successfulUpdate = dataService.UpdatePlayList(fromPlayList, toPlayList);
             
 

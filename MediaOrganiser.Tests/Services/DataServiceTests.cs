@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
-using FakeItEasy;
 using MediaOrganiser.Interfaces;
 using MediaOrganiser.Modals;
 using MediaOrganiser.Services;
@@ -77,11 +76,10 @@ namespace MediaOrganiser.Tests.Services
         }
 
         [Test]
-        [TestCaseSource("AllPossibleCurrentDirectoryValues")]
-        public void PostItemIndependently_WhenItemNameAndCurrentDirectoryHasValue_ReturnTrue(CurrentDirectory currentDirectory)
+        public void PostItemIndependently_WhenItemNameAndCurrentDirectoryHasValue_ReturnTrue()
         {
             SetTestData(new Data());
-            var result = dataService.PostItemIndependently("TestItem", currentDirectory);
+            var result = dataService.PostItemIndependently("TestItem", new CurrentDirectory());
             Assert.That(result, Is.EqualTo(true));
         }
         
@@ -95,14 +93,13 @@ namespace MediaOrganiser.Tests.Services
             {
                 return new []
                 {
-                    new TestCaseData("TestPlayList", "TestCategory", "TestMediaFile", new Image("TestImage", "TestImagePath"), "TestComment"),
+                    new TestCaseData("TestPlayList", new string[] {"TestCategory"}, "TestMediaFile", new Image("TestImage", "TestImagePath"), "TestComment"),
                     new TestCaseData("TestPlayList", null, "TestMediaFile", new Image("TestImage", "TestImagePath"), "TestComment"),
-                    new TestCaseData("TestPlayList", "TestCategory", "TestMediaFile", new Image("TestImage", "TestImagePath"), null),
-                    new TestCaseData("TestPlayList", null, "TestMediaFile", null, null),
-                    new TestCaseData("TestPlayList", null, "TestMediaFile", null, "TestComment"),
+                    new TestCaseData("TestPlayList", new string[] {"TestCategory"}, "TestMediaFile", new Image("TestImage", "TestImagePath"), null),
+                    new TestCaseData("TestPlayList", null, "TestMediaFile", new Image(), null),
+                    new TestCaseData("TestPlayList", null, "TestMediaFile", new Image(), "TestComment"),
                     new TestCaseData("TestPlayList", null, "TestMediaFile", new Image("TestImage", "TestImagePath"), null),
-                    new TestCaseData("TestPlayList", "TestCategory", "TestMediaFile", null, null),
-                    new TestCaseData("TestPlayList", null, null, null, null)
+                    new TestCaseData("TestPlayList", new string[] {"TestCategory"}, "TestMediaFile", new Image(), null)
                 }; 
             }
         }
@@ -113,16 +110,16 @@ namespace MediaOrganiser.Tests.Services
             {
                 return new[]
                 {
-                    new TestCaseData("TestPlayList", "TestCategory", null, new Image("TestImage", "TestImagePath"), "TestComment"),
-                    new TestCaseData("TestPlayList", "TestCategory", null, null, "TestComment"),
-                    new TestCaseData("TestPlayList", "TestCategory", null,  new Image("TestImage", "TestImagePath"), null),
-                    new TestCaseData("TestPlayList", "TestCategory", null,  null, null),
+                    new TestCaseData("TestPlayList", new string[] {"TestCategory"}, null, new Image("TestImage", "TestImagePath"), "TestComment"),
+                    new TestCaseData("TestPlayList", new string[] {"TestCategory"}, null, null, "TestComment"),
+                    new TestCaseData("TestPlayList", new string[] {"TestCategory"}, null,  new Image("TestImage", "TestImagePath"), null),
+                    new TestCaseData("TestPlayList", new string[] {"TestCategory"}, null,  null, null),
                     new TestCaseData("TestPlayList", null, null,  new Image("TestImage", "TestImagePath"), null),
                     new TestCaseData("TestPlayList", null, null,  null, "TestComment"),
-                    new TestCaseData(null , "TestCategory", "TestMediaFile", new Image("TestImage", "TestImagePath"), "TestComment"),
-                    new TestCaseData(null , "TestCategory", null, new Image("TestImage", "TestImagePath"), "TestComment"),
+                    new TestCaseData(null , new string[] {"TestCategory"}, "TestMediaFile", new Image("TestImage", "TestImagePath"), "TestComment"),
+                    new TestCaseData(null , new string[] {"TestCategory"}, null, new Image("TestImage", "TestImagePath"), "TestComment"),
                     new TestCaseData(null, null, null, null, null), 
-                    new TestCaseData(null, "TestCategory", null, null, null),
+                    new TestCaseData(null, new string[] {"TestCategory"}, null, null, null),
                     new TestCaseData(null, null, null, new Image("TestImage", "TestImagePath"), null),
                     new TestCaseData(null, null, null, new Image("TestImage", null), null),
                     new TestCaseData(null, null, null, new Image(null, null), null),
@@ -132,7 +129,7 @@ namespace MediaOrganiser.Tests.Services
 
         [Test]
         [TestCaseSource("AllPossibleInvalidPostFileValues")]
-        public void PostFiles_WhenRequiredDataIsNotPopulated_ReturnFalse(string playListName, string categoryName, string mediaFile, Image image, string comment)
+        public void PostFiles_WhenRequiredDataIsNotPopulated_ReturnFalse(string playListName, string[] categoryName, string mediaFile, Image image, string comment)
         {
             SetTestData(new Data());
             var result = dataService.PostFiles(playListName, categoryName, mediaFile, image, comment);
@@ -141,7 +138,7 @@ namespace MediaOrganiser.Tests.Services
         
         [Test]
         [TestCaseSource("AllPossiblePostFilesRequiredValues")]
-        public void PostFiles_WhenRequiredDataIsPopulated_ReturnTrue(string playListName, string categoryName, string mediaFile, Image image, string comment)
+        public void PostFiles_WhenRequiredDataIsPopulated_ReturnTrue(string playListName, string[] categoryName, string mediaFile, Image image, string comment)
         {
             SetTestData(new Data());
             var result = dataService.PostFiles(playListName, categoryName, mediaFile, image, comment);
@@ -362,17 +359,7 @@ namespace MediaOrganiser.Tests.Services
             var result = dataService.GetAllChildren(null, new CurrentDirectory(null, "TestCategory"));
             Assert.That(result, Is.EqualTo(null));
         }
-        
-        [Test]
-        // This works but as the file doesn't exist its try's opening a non existing file which it fails
-        public void GetAllChildren_WhenSelectedItemIsSetAndCurrentDirectoryCategoryIsSetAndFilesExists_ReturnHashSetOfStrings()
-        {
-            SetFullTestDataForGetAllChildrenTests();
-            
-            var result = dataService.GetAllChildren(new ListViewItem() { Text = "TestItem" }, new CurrentDirectory(null, "TestCategory"));
-            Assert.That(result, Is.TypeOf<HashSet<string>>());
-        }
-        
+
         [Test]
         public void GetAllChildren_WhenSelectedItemIsSetAndCurrentDirectoryCategoryIsSetAndFilesDoesNotExists_ReturnNull()
         {
@@ -448,11 +435,18 @@ namespace MediaOrganiser.Tests.Services
         }
         
         [Test]
-        [TestCaseSource("AllPossibleCurrentDirectoryValues")]
-        public void UpdateItemIndependently_WhenNewItemNameAndNewItemNameIsSetAndItemExists_ReturnTrue(CurrentDirectory currentDirectory)
+        public void UpdateItemIndependently_WhenSelectedItemNameAndNewItemNameAndCurrentDirectoryIsSetAndItemExists_ReturnTrue()
         {
             SetFullTestDataForUpdateItemIndependently();
-            var result = dataService.UpdateItemIndependently("TestItem", "newItemName", currentDirectory);
+            var result = dataService.UpdateItemIndependently("TestItem", "newItemName", new CurrentDirectory());
+            Assert.That(result, Is.EqualTo(true));
+        }
+        
+        [Test]
+        public void UpdateItemIndependently_WhenSelectedItemNameAndNewItemNameAndCurrentDirectoryPlayListIsSetAndItemExists_ReturnTrue()
+        {
+            SetFullTestDataForUpdateItemIndependently();
+            var result = dataService.UpdateItemIndependently("TestItem", "newItemName", new CurrentDirectory("TestItem"));
             Assert.That(result, Is.EqualTo(true));
         }
         

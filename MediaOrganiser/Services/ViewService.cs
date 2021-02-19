@@ -33,37 +33,6 @@ namespace MediaOrganiser.Services
             form.Show();
         }
 
-        public void ShowFilesAndDirectories(HashSet<string> items, ListView fileManger, CurrentDirectory currentDirectory)
-        {
-            fileManger.Items.Clear();
-            if (currentDirectory?.PlayList != null)
-            {
-                var backFolderItem = new ListViewItem()
-                {
-                    Text = "...",
-                    ImageIndex = 1,
-                    Tag = "backButton",
-                    ToolTipText = "back"
-                };
-                fileManger.Items.Add(backFolderItem);
-            }
-
-            if (items != null)
-            {
-                foreach (var item in items)
-                {
-                    if (currentDirectory.PlayList != null && currentDirectory.Category != null)
-                    {
-                        fileManger.Items.Add(item, 0);
-                    }
-                    else 
-                    {
-                        fileManger.Items.Add(item, 1);
-                    }
-                }
-            }
-        }
-
         public void ShowFilesAndDirectories(List<Item> items, ListView fileManger, CurrentDirectory currentDirectory, ImageList imageList)
         {
             ResetImageList(imageList);
