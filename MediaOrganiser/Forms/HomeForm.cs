@@ -2,7 +2,6 @@
 using System.Windows.Forms;
 using MediaOrganiser.Modals;
 using System.Collections.Generic;
-using System.Windows.Forms.VisualStyles;
 
 namespace MediaOrganiser
 {
@@ -14,17 +13,30 @@ namespace MediaOrganiser
         private CurrentDirectory currentDirectory = new CurrentDirectory();
 
         public HomeForm(IViewService viewService,
-            IDataService dataService)
-        {
+            IDataService dataService,
+            CurrentDirectory currentDirectory = null,
+            ListViewItem selectedItem = null)
+        { 
             this.viewService = viewService;
             this.dataService = dataService;
+            if (currentDirectory != null)
+            {
+                this.currentDirectory = currentDirectory;
+            }
+            if (selectedItem != null)
+            {
+                this.selectedItem = selectedItem;
+            }
+          
             InitializeComponent();
         }
 
         private void HomeForm_Load(object sender, System.EventArgs e)
         {
-            var playLists = dataService.GetAllChildren(null, currentDirectory);
+            var playLists = dataService.GetAllChildren(selectedItem, currentDirectory);
             viewService.ShowFilesAndDirectories(playLists, FileManager, currentDirectory);
+
+            SetCurrentDirectory();
         }
 
         private void FileManager_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -32,6 +44,11 @@ namespace MediaOrganiser
             var storedItems = dataService.GetAllChildren(selectedItem, currentDirectory);
             viewService.ShowFilesAndDirectories(storedItems, FileManager, currentDirectory);
 
+            SetCurrentDirectory();
+        }
+
+        private void SetCurrentDirectory()
+        {
             if (currentDirectory.Category == null && currentDirectory.PlayList != null)
             {
                 LblCurrentDirectory.Text = $"Current Directory: {currentDirectory.PlayList}";
@@ -53,11 +70,14 @@ namespace MediaOrganiser
 
         private void BtnAdd_Click(object sender, System.EventArgs e)
         {
-            dataService.PostItemIndependently(TxtbxFileManager.Text, currentDirectory);
-            var selectedItem = GetCurrentDirectory();
-            var storedItems = dataService.GetAllChildren(selectedItem, currentDirectory);
-            viewService.ShowFilesAndDirectories(storedItems, FileManager, currentDirectory);
+            PostItem();
             viewService.ClearForm(new List<TextBox> { TxtbxFileManager });
+        }
+
+        private void PostItem()
+        {
+            dataService.PostItemIndependently(TxtbxFileManager.Text, currentDirectory);
+            RefreshFileManager();
         }
 
         private ListViewItem GetCurrentDirectory()
@@ -92,18 +112,26 @@ namespace MediaOrganiser
             if (confirmResult == DialogResult.Yes)
             {
                 dataService.RemoveItemIndependently(selectedItem.Text, currentDirectory);
-                selectedItem = GetCurrentDirectory();
-                var storedItems = dataService.GetAllChildren(selectedItem, currentDirectory);
-                viewService.ShowFilesAndDirectories(storedItems, FileManager, currentDirectory);
+                RefreshFileManager();
             }
+        }
+
+        private void RefreshFileManager()
+        {
+            selectedItem = GetCurrentDirectory();
+            var storedItems = dataService.GetAllChildren(selectedItem, currentDirectory);
+            viewService.ShowFilesAndDirectories(storedItems, FileManager, currentDirectory);
         }
 
         private void BtnEdit_Click(object sender, System.EventArgs e)
         {
+            if (currentDirectory.Category != null)
+            {
+                viewService.UpdateView(new EditForm(dataService, viewService, selectedItem.Text, currentDirectory));
+            }
+
             dataService.UpdateItemIndependently(selectedItem.Text, TxtbxFileManager.Text, currentDirectory);
-            selectedItem = GetCurrentDirectory();
-            var storedItems = dataService.GetAllChildren(selectedItem, currentDirectory);
-            viewService.ShowFilesAndDirectories(storedItems, FileManager, currentDirectory);
+            RefreshFileManager();
             viewService.ClearForm(new List<TextBox> { TxtbxFileManager });
         }
 

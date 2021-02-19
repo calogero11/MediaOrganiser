@@ -9,17 +9,26 @@ namespace MediaOrganiser.Services
 {
     class ViewService: IViewService
     {
-        public void UpdateView(Label title, Form form, Panel pnlFormLoader)
+        public static Label MainMenuTitle { get; set; }
+        public static Panel FormLoader { get; set; }
+
+        public void SetUpFormLoader(Label title, Panel formLoader)
+        {
+            MainMenuTitle = title;
+            FormLoader = formLoader;
+        }
+
+        public void UpdateView(Form form)
         {
             form.Dock = DockStyle.Fill;
             form.TopLevel = false;
             form.TopMost = true;
             form.FormBorderStyle = FormBorderStyle.None;
 
-            title.Text = form.Name.Substring(0, form.Name.Length - 4);
+            MainMenuTitle.Text = form.Name.Substring(0, form.Name.Length - 4);
 
-            pnlFormLoader.Controls.Clear();
-            pnlFormLoader.Controls.Add(form);
+            FormLoader.Controls.Clear();
+            FormLoader.Controls.Add(form);
 
             form.Show();
         }
@@ -27,13 +36,14 @@ namespace MediaOrganiser.Services
         public void ShowFilesAndDirectories(HashSet<string> items, ListView fileManger, CurrentDirectory currentDirectory)
         {
             fileManger.Items.Clear();
-            if (currentDirectory.PlayList != null)
+            if (currentDirectory?.PlayList != null)
             {
                 var backFolderItem = new ListViewItem()
                 {
                     Text = "...",
                     ImageIndex = 1,
-                    Tag = "backButton"
+                    Tag = "backButton",
+                    ToolTipText = "back"
                 };
                 fileManger.Items.Add(backFolderItem);
             }

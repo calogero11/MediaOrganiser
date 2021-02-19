@@ -12,6 +12,117 @@ namespace MediaOrganiser.Services
 {
     public class DataService : IDataService
     {
+        public bool UpdatePlayList(PlayList fromPlayList, PlayList toPlayList)
+        {
+            if (fromPlayList.Name == toPlayList.Name)
+            {
+                return UpdateMediaFile(fromPlayList, toPlayList);
+            }
+            else
+            {
+                return MoveAndUpdateMediaFile(fromPlayList, toPlayList);
+            }
+        }
+
+        private bool UpdateMediaFile(PlayList fromPlayList, PlayList toPlayList)
+        {
+            var data = ReadData();
+
+            var oldMediaFile = data
+               .PlayLists?
+               .FirstOrDefault(playList => playList.Name == fromPlayList.Name)?
+               .MediaFiles?
+               .FirstOrDefault(mediaFile => mediaFile.Name == fromPlayList.MediaFiles.First().Name);
+
+            var updatedMediaFile = toPlayList?
+                .MediaFiles?
+                .First();
+
+            if (oldMediaFile != null && updatedMediaFile != null)
+            {
+                oldMediaFile.Name = updatedMediaFile.Name;
+                oldMediaFile.Image = updatedMediaFile.Image;
+                oldMediaFile.Comment = updatedMediaFile.Comment;
+                oldMediaFile.Path = updatedMediaFile.Path;
+                oldMediaFile.Categories = updatedMediaFile.Categories;
+                SaveChanges(data);
+
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool MoveAndUpdateMediaFile(PlayList fromPlayList, PlayList toPlayList)
+        {
+            var data = ReadData();
+
+            var allMediaFilesInPlayList = data
+               .PlayLists?
+               .FirstOrDefault(playList => playList.Name == fromPlayList.Name)?
+               .MediaFiles;
+
+            var oldMediaFile = data
+               .PlayLists?
+               .FirstOrDefault(playList => playList.Name == fromPlayList.Name)?
+               .MediaFiles?
+               .FirstOrDefault(mediaFile => mediaFile.Name == fromPlayList.MediaFiles.First().Name);
+
+            if (oldMediaFile != null && toPlayList != null)
+            {
+                allMediaFilesInPlayList.Remove(oldMediaFile);
+                SaveChanges(data);
+
+                PostFiles(toPlayList.Name,
+                    toPlayList.MediaFiles.First().Categories.First().Name,
+                    toPlayList.MediaFiles.First().Name,
+                    toPlayList.MediaFiles.First().Image,
+                    toPlayList.MediaFiles.First().Comment);
+
+                return true;
+            }
+
+
+            return false;
+        }
+
+
+        public string GetFilePath(string selectedItem, CurrentDirectory currentDirectory)
+        {
+            var data = ReadData();
+
+            return data
+                .PlayLists?
+                .FirstOrDefault(playList => playList.Name == currentDirectory.PlayList)?
+                .MediaFiles?
+                .FirstOrDefault(mediaFile => mediaFile.Name == selectedItem)?
+                .Path;
+        }
+
+        public Image GetFileImage(string selectedItem, CurrentDirectory currentDirectory)
+        {
+            var data = ReadData();
+
+            return data
+                .PlayLists?
+                .FirstOrDefault(playList => playList.Name == currentDirectory.PlayList)?
+                .MediaFiles?
+                .FirstOrDefault(mediaFile => mediaFile.Name == selectedItem)?
+                .Image;
+        }
+
+        public string GetFileComment(string selectedItem, CurrentDirectory currentDirectory)
+        {
+            var data = ReadData();
+
+            return data
+                .PlayLists?
+                .FirstOrDefault(playList => playList.Name == currentDirectory.PlayList)?
+                .MediaFiles?
+                .FirstOrDefault(mediaFile => mediaFile.Name == selectedItem)?
+                .Comment;
+        }
+
         public bool UpdateItemIndependently(string selectedItem, string newItemName, CurrentDirectory currentDirectory)
         {
             if (newItemName != null && selectedItem != null)
@@ -216,10 +327,9 @@ namespace MediaOrganiser.Services
             }
             else if (playLists.Select(playList => playList.Name).Contains(playListName))
             {
-                var mediaFiles = data.PlayLists.SelectMany(playList => playList.MediaFiles);
-                var mediaCategories = mediaFiles.SelectMany(media => media.Categories);
-                if (mediaCategories.Select(mediaCategory => mediaCategory.Name).Contains(categoryName)
-                    && mediaFiles.Select(media => media.Name).Contains(mediaFile))
+                var isFileDuplicate = FileExists(playListName, mediaFile);
+              
+                if (isFileDuplicate)
                 {
                         return false;   
                 }
@@ -265,13 +375,28 @@ namespace MediaOrganiser.Services
                 );
             }
 
-            string json = JsonConvert.SerializeObject(data);
-
-            File.WriteAllText(@"..\..\Data\data.json", json);
+            SaveChanges(data);
 
             return true;
         }
 
+        private bool FileExists(string playListName, string mediaFileName)
+        {
+            var data = ReadData();
+
+            var playListMediaFileNames = data
+                .PlayLists?
+                .FirstOrDefault(playList => playList.Name == playListName)?
+                .MediaFiles?
+                .Select(mediaFiles => mediaFiles.Name);
+
+            if (playListMediaFileNames != null && playListMediaFileNames.Contains(mediaFileName))
+            {
+                return true;
+            }
+
+            return false;
+        }
 
         public HashSet<string> GetAllChildren(ListViewItem selectedItem, CurrentDirectory currentDirecotory)
         {

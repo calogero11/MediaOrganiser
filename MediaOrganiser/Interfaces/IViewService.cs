@@ -6,7 +6,8 @@ namespace MediaOrganiser.Interfaces
 {
     public interface IViewService
     {
-        void UpdateView(Label title, Form form, Panel pnlFormLoader);
+        void SetUpFormLoader(Label title, Panel formLoader);
+        void UpdateView(Form form);
         void ShowFilesAndDirectories(HashSet<string> items, ListView fileManager, CurrentDirectory currentDirectory);
         (Button, Panel) ActivateButton(Button fromActiveButton, Panel fromActivePanel, Button toActiveButton, Panel toActivePanel);
         void AddTextBoxAutoComplete(TextBox textBox, string[] suggestions);

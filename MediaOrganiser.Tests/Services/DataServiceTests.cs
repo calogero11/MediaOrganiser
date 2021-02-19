@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
+using FakeItEasy;
+using MediaOrganiser.Interfaces;
 using MediaOrganiser.Modals;
 using MediaOrganiser.Services;
 using Newtonsoft.Json;
@@ -12,6 +14,7 @@ namespace MediaOrganiser.Tests.Services
     public class DataServiceTests
     {
         private DataService dataService;
+        private IViewService viewService;
         
         [SetUp]
         public void Setup()
