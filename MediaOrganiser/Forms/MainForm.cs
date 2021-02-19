@@ -18,13 +18,16 @@ namespace MediaOrganiser
 
             InitializeComponent();
 
+
+            viewService.SetUpFormLoader(LblTitle, PnlFormLoader);
+
             if (dataService.GetAllChildren(null, new CurrentDirectory()) == null)
             {
-                viewService.UpdateView(LblTitle, new EmptyHomeForm(), PnlFormLoader);
+                viewService.UpdateView(new EmptyHomeForm());
             }
             else
             {
-                viewService.UpdateView(LblTitle, new HomeForm(viewService, dataService), PnlFormLoader);
+                viewService.UpdateView(new HomeForm(viewService, dataService));
             }
 
             activeMenuButton = (BtnHome, PnlHomeButtonIndicator);
@@ -40,11 +43,11 @@ namespace MediaOrganiser
           
             if (dataService.GetAllChildren(null, new CurrentDirectory()) == null)
             {
-                viewService.UpdateView(LblTitle, new EmptyHomeForm(), PnlFormLoader);
+                viewService.UpdateView(new EmptyHomeForm());
             }
             else
             {
-                viewService.UpdateView(LblTitle, new HomeForm(viewService, dataService), PnlFormLoader);
+                viewService.UpdateView(new HomeForm(viewService, dataService));
             }
         }
 
@@ -70,7 +73,8 @@ namespace MediaOrganiser
             {
                 activeMenuButton = activateButtonResult;
             }
-            viewService.UpdateView(LblTitle, new AddForm(dataService, viewService), PnlFormLoader);
+
+            viewService.UpdateView(new AddForm(dataService, viewService));
         }
     }
 }
