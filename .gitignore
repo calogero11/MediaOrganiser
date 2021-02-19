@@ -5,5 +5,5 @@ _ReSharper.*
 bin
 obj
 .vs
-MediaOrganiser.Tests/bin/Debug
+.idea
 packages

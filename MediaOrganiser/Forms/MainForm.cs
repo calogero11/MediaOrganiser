@@ -73,6 +73,7 @@ namespace MediaOrganiser
             {
                 activeMenuButton = activateButtonResult;
             }
+
             viewService.UpdateView(new AddForm(dataService, viewService));
         }
     }
