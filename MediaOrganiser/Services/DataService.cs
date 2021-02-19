@@ -169,8 +169,10 @@ namespace MediaOrganiser.Services
         private bool UpdatePlayList(string fromPlayListName, string toPlayListName)
         {
             var data = ReadData();
-
-            if (data.PlayLists?.FirstOrDefault(playList => playList.Name == fromPlayListName) != null)
+            
+            if (data.PlayLists?.FirstOrDefault(playList => playList.Name == fromPlayListName) != null 
+                && !string.IsNullOrWhiteSpace(toPlayListName)
+                && !PlayListExists(toPlayListName))
             {
                 data.PlayLists.FirstOrDefault(playList => playList.Name == fromPlayListName).Name = toPlayListName;
                 SaveChanges(data);
@@ -261,96 +263,86 @@ namespace MediaOrganiser.Services
         private bool AddPlayList(string playListName)
         {
             var data = ReadData();
-            bool isSaved;
 
-            if (playListName != null)
+            if (playListName != null && !PlayListExists(playListName))
             {
                 if (data.PlayLists == null)
                 {
                     data.PlayLists = new List<PlayList>
                     {
-                        new PlayList(playListName, null)
+                        new PlayList(playListName, new List<MediaFile>())
                     };
                     SaveChanges(data);
-                    isSaved = true;
+                    return true;
                 }
                 else
                 {
-                    data.PlayLists.Add(new PlayList(playListName, null));
+                    data.PlayLists.Add(new PlayList(playListName, new List<MediaFile>()));
                     SaveChanges(data);
-                    isSaved = true;
+                    return true;
                 }
             }
-            else
-            {
-                isSaved = false;
-            }
             
-            return isSaved;
+            return false;
         }
 
         private void SaveChanges(Data data)
         {
+            var currentDirectory = Directory.GetCurrentDirectory();
             string json = JsonConvert.SerializeObject(data);
-            File.WriteAllText(@"..\..\Data\data.json", json);
+            File.WriteAllText(@"..\..\Data\Data.json", json);
         }
 
-        public bool PostFiles(string playListName, string categoryName, string mediaFile, Image image, string comment)
+        public bool PostFiles(string playListName, string categoryName, string mediaFilePath, Image image, string comment)
         {
             var data = ReadData();
 
-            var fileInfo = new FileInfo(mediaFile);
+            if (playListName == null ||
+                mediaFilePath == null ||
+                FileExists(playListName, new FileInfo(mediaFilePath).Name))
+            {
+                return false;
+            }
+
+            var fileInfo = new FileInfo(mediaFilePath);
 
             var playLists = data.PlayLists; 
             if (playLists == null)
             {
                 data.PlayLists =
-                    new List<PlayList> {
-                        new PlayList(
-                            playListName,
-                            new List<MediaFile>
-                            {
-                                new MediaFile(
-                                    fileInfo.Name,
-                                    fileInfo.DirectoryName,
-                                    fileInfo.Extension,
-                                    comment,
-                                    image,
-                                    new List<Category>
-                                    {
-                                        new Category(categoryName)
-                                    }
-                                )
-                            }
-                        )
-                    };
+                new List<PlayList> {
+                    new PlayList(
+                        playListName,
+                        new List<MediaFile>
+                        {
+                            new MediaFile(
+                                fileInfo.Name,
+                                fileInfo.DirectoryName,
+                                fileInfo.Extension,
+                                null,
+                                new Image(),
+                                new List<Category>()
+                            )
+                        }
+                    )
+                };
             }
             else if (playLists.Select(playList => playList.Name).Contains(playListName))
             {
-                var isFileDuplicate = FileExists(playListName, mediaFile);
-              
-                if (isFileDuplicate)
-                {
-                        return false;   
-                }
-
-            playLists
-            .FirstOrDefault(playList => playList.Name == playListName)
-            .MediaFiles
-            .Add(
-                new MediaFile(
-                    fileInfo.Name,
-                    fileInfo.DirectoryName,
-                    fileInfo.Extension,
-                    comment,
-                    image,
-                    new List<Category>
-                    {
-                        new Category(categoryName)
-                    }
-                )
-            );
-
+                data.
+                PlayLists
+                    .FirstOrDefault(playList => playList.Name == playListName)?
+                    .MediaFiles?
+                    .Add(
+                        new MediaFile(
+                            fileInfo.Name,
+                            fileInfo.DirectoryName,
+                            fileInfo.Extension,
+                            null,
+                            new Image(),
+                            new List<Category>()
+                        )
+                    );
             }
             else
             {
@@ -363,16 +355,42 @@ namespace MediaOrganiser.Services
                                 fileInfo.Name,
                                 fileInfo.DirectoryName,
                                 fileInfo.Extension,
-                                comment,
-                                image,
-                                new List<Category>
-                                {
-                                    new Category(categoryName)
-                                }
+                                null,
+                                new Image(),
+                                new List<Category>()
                             ) 
                         }
                     )
                 );
+
+            }
+
+            if (!string.IsNullOrWhiteSpace(categoryName))
+            {
+                data
+                    .PlayLists
+                    .FirstOrDefault(playList => playList.Name == playListName)
+                    .MediaFiles
+                    .FirstOrDefault(mediaFile => mediaFile.Name == fileInfo.Name)
+                    .Categories.Add(new Category(categoryName));
+            }
+            if (!string.IsNullOrWhiteSpace(image?.Name))
+            {
+                data
+                  .PlayLists
+                  .FirstOrDefault(playList => playList.Name == playListName)
+                  .MediaFiles
+                  .FirstOrDefault(mediaFile => mediaFile.Name == fileInfo.Name)
+                  .Image = image;
+            }
+            if (!string.IsNullOrWhiteSpace(comment))
+            {
+                data
+               .PlayLists
+               .FirstOrDefault(playList => playList.Name == playListName)
+               .MediaFiles
+               .FirstOrDefault(mediaFile => mediaFile.Name == fileInfo.Name)
+               .Comment = comment;
             }
 
             SaveChanges(data);
@@ -380,6 +398,22 @@ namespace MediaOrganiser.Services
             return true;
         }
 
+        private bool PlayListExists(string playListName)
+        {
+            var data = ReadData();
+
+            var storedPlayList = data
+                .PlayLists?
+                .FirstOrDefault(playList => playList.Name == playListName);
+
+            if (storedPlayList != null)
+            {
+                return true;
+            }
+
+            return false;
+        }
+        
         private bool FileExists(string playListName, string mediaFileName)
         {
             var data = ReadData();
