@@ -130,6 +130,7 @@ namespace MediaOrganiser.Services
                 switch (currentDirectory)
                 {
                     case var x when x.Category != null:
+                        // This is done throgh the homeForm
                         break;
                     case var x when x.PlayList != null:
                         return UpdateCategory(selectedItem, newItemName, currentDirectory.PlayList);
@@ -190,12 +191,37 @@ namespace MediaOrganiser.Services
                 switch (currentDirectory)
                 {
                     case var x when x.Category != null:
-                        break;
+                        return RemoveMediaFile(itemName, currentDirectory.PlayList);
                     case var x when x.PlayList != null:
                         return RemoveCategory(itemName, currentDirectory.PlayList);
                     default:
                         return RemovePlayList(itemName);
                 }
+            }
+
+            return false;
+        }
+
+        private bool RemoveMediaFile(string itemName, string playListName)
+        {
+            var data = ReadData();
+
+            var mediaFileToRemove = data
+                .PlayLists?
+                .FirstOrDefault(playList => playList.Name == playListName)?
+                .MediaFiles?
+                .FirstOrDefault(mediaFile => mediaFile.Name == itemName);
+
+            if (mediaFileToRemove != null)
+            {
+                data
+                .PlayLists?
+                .FirstOrDefault(playList => playList.Name == playListName)?
+                .MediaFiles.Remove(mediaFileToRemove);
+
+                SaveChanges(data);
+
+                return true;
             }
 
             return false;
@@ -251,6 +277,7 @@ namespace MediaOrganiser.Services
                     case var x when x.Category != null:
                         break;
                     case var x when x.PlayList != null:
+                        MessageBox.Show("Category can't be added independantly because they are based on media files", "Invalid", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         break;
                     default:
                         return AddPlayList(itemName);
@@ -297,10 +324,19 @@ namespace MediaOrganiser.Services
         {
             var data = ReadData();
 
-            if (playListName == null ||
-                mediaFilePath == null ||
-                FileExists(playListName, new FileInfo(mediaFilePath).Name))
+            if (string.IsNullOrWhiteSpace(playListName))
             {
+                MessageBox.Show("Playlist field can not be empty", "Invalid", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return false;
+            }
+            if (string.IsNullOrWhiteSpace(mediaFilePath))
+            {
+                MessageBox.Show("media file field can not be empty", "Invalid", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return false;
+            }
+            if (FileExists(playListName, new FileInfo(mediaFilePath).Name))
+            {
+                MessageBox.Show("media file already exists", "Invalid", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return false;
             }
 
