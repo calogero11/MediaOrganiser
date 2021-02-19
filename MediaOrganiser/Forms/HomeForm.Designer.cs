@@ -71,7 +71,7 @@
             this.TxtbxFileManager.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtbxFileManager.Location = new System.Drawing.Point(0, 0);
             this.TxtbxFileManager.Name = "TxtbxFileManager";
-            this.TxtbxFileManager.Size = new System.Drawing.Size(526, 30);
+            this.TxtbxFileManager.Size = new System.Drawing.Size(526, 36);
             this.TxtbxFileManager.TabIndex = 6;
             // 
             // BtnEdit
@@ -127,7 +127,7 @@
             this.LblCurrentDirectory.AutoSize = true;
             this.LblCurrentDirectory.Location = new System.Drawing.Point(3, 0);
             this.LblCurrentDirectory.Name = "LblCurrentDirectory";
-            this.LblCurrentDirectory.Size = new System.Drawing.Size(92, 13);
+            this.LblCurrentDirectory.Size = new System.Drawing.Size(124, 17);
             this.LblCurrentDirectory.TabIndex = 0;
             this.LblCurrentDirectory.Text = "Current Directory: ";
             // 

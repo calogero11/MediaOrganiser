@@ -47,9 +47,9 @@ namespace MediaOrganiser
 
         private void SetFormInfo(string selectedMediaFile)
         {
-            TxtbxPlayList.Text = currentDirectory.PlayList;
-            TxtbxCategory.Text = currentDirectory.Category;
-            TxtbxImage.Text = selectedImage.Name;
+            TxtbxPlayList.Text = currentDirectory?.PlayList;
+            TxtbxCategory.Text = currentDirectory?.Category;
+            TxtbxImage.Text = selectedImage?.Name;
             TxtbxMediaFile.Text = selectedMediaFile;
             TxtbxComment.Text = dataService.GetFileComment(selectedMediaFile, currentDirectory);
         }
@@ -125,19 +125,10 @@ namespace MediaOrganiser
             }
         }
 
-        private void TxtbxMediaFile_TextChanged(object sender, EventArgs e)
+        private void BtnRemoveImage_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void TxtbxImage_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void TxtbxCategory_TextChanged(object sender, EventArgs e)
-        {
-
+            TxtbxImage.Text = " ";
+            selectedImage = new Image();
         }
     }
 }

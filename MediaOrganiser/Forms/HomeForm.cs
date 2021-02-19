@@ -34,7 +34,8 @@ namespace MediaOrganiser
         private void HomeForm_Load(object sender, System.EventArgs e)
         {
             var playLists = dataService.GetAllChildren(selectedItem, currentDirectory);
-            viewService.ShowFilesAndDirectories(playLists, FileManager, currentDirectory);
+            var itemList = GetItemList(playLists);
+            viewService.ShowFilesAndDirectories(itemList, FileManager, currentDirectory, iconList);
 
             SetCurrentDirectory();
         }
@@ -42,7 +43,8 @@ namespace MediaOrganiser
         private void FileManager_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             var storedItems = dataService.GetAllChildren(selectedItem, currentDirectory);
-            viewService.ShowFilesAndDirectories(storedItems, FileManager, currentDirectory);
+            var itemList = GetItemList(storedItems);
+            viewService.ShowFilesAndDirectories(itemList, FileManager, currentDirectory, iconList);
 
             SetCurrentDirectory();
         }
@@ -118,9 +120,43 @@ namespace MediaOrganiser
 
         private void RefreshFileManager()
         {
+            var items = new List<Item>();
             selectedItem = GetCurrentDirectory();
             var storedItems = dataService.GetAllChildren(selectedItem, currentDirectory);
-            viewService.ShowFilesAndDirectories(storedItems, FileManager, currentDirectory);
+            var itemList = GetItemList(storedItems);
+
+            viewService.ShowFilesAndDirectories(itemList, FileManager, currentDirectory, iconList);
+        }
+
+        private List<Item> GetItemList(HashSet<string> storedItems)
+        {
+            if (storedItems != null)
+            {
+                var items = new List<Item>();
+
+                if (currentDirectory.PlayList != null && currentDirectory.Category != null)
+                {
+                    foreach (var storedItem in storedItems)
+                    {
+                        var comment = dataService.GetFileComment(storedItem, currentDirectory);
+                        var image = dataService.GetFileImage(storedItem, currentDirectory);
+                        items.Add(new Item(storedItem, image, comment));
+                    }
+                }
+                else
+                {
+                    foreach (var storedItem in storedItems)
+                    {
+                        items.Add(new Item(storedItem));
+                    }
+                }
+
+
+
+                return items;
+            }
+
+            return null;
         }
 
         private void BtnEdit_Click(object sender, System.EventArgs e)

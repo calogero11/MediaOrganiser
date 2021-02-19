@@ -87,6 +87,7 @@
     <Compile Include="Modals\CurrentDirectory.cs" />
     <Compile Include="Modals\Data.cs" />
     <Compile Include="Modals\Image.cs" />
+    <Compile Include="Modals\Item.cs" />
     <Compile Include="Modals\MediaFile.cs" />
     <Compile Include="Modals\PlayList.cs" />
     <Compile Include="Program.cs" />

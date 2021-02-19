@@ -40,10 +40,13 @@ namespace MediaOrganiser
                 };
                 
                 var hashSetCategories = this.dataService.GetAllChildren(selectedItem, new CurrentDirectory());
-                string[] arrayCategories = new string[hashSetCategories.Count];
-                hashSetCategories.CopyTo(arrayCategories);
+                if (hashSetCategories != null )
+                {
+                    string[] arrayCategories = new string[hashSetCategories.Count];
+                    hashSetCategories.CopyTo(arrayCategories);
 
-                viewService.AddTextBoxAutoComplete(TxtbxCategory, arrayCategories);
+                    viewService.AddTextBoxAutoComplete(TxtbxCategory, arrayCategories);
+                }
             }
         }
 
@@ -90,6 +93,12 @@ namespace MediaOrganiser
             {
                 LblOutcome.Text = "Error - File already exists or invalid";
             }
+        }
+
+        private void btnClearImageTxtbx_Click(object sender, EventArgs e)
+        {
+            TxtbxImage.Text = " ";
+            selectedImage = new Image();
         }
     }
 }

@@ -43,6 +43,7 @@
             this.BtnSelectImage = new System.Windows.Forms.Button();
             this.BtnUpdate = new System.Windows.Forms.Button();
             this.LblOutcome = new System.Windows.Forms.Label();
+            this.BtnRemoveImage = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // TxtbxPlayList
@@ -54,7 +55,7 @@
             this.TxtbxPlayList.ForeColor = System.Drawing.SystemColors.InfoText;
             this.TxtbxPlayList.Location = new System.Drawing.Point(151, 91);
             this.TxtbxPlayList.Name = "TxtbxPlayList";
-            this.TxtbxPlayList.Size = new System.Drawing.Size(330, 20);
+            this.TxtbxPlayList.Size = new System.Drawing.Size(330, 22);
             this.TxtbxPlayList.TabIndex = 0;
             this.TxtbxPlayList.TextChanged += new System.EventHandler(this.TxtbxPlayList_TextChanged);
             // 
@@ -67,9 +68,8 @@
             this.TxtbxCategory.ForeColor = System.Drawing.SystemColors.InfoText;
             this.TxtbxCategory.Location = new System.Drawing.Point(150, 146);
             this.TxtbxCategory.Name = "TxtbxCategory";
-            this.TxtbxCategory.Size = new System.Drawing.Size(330, 20);
+            this.TxtbxCategory.Size = new System.Drawing.Size(330, 22);
             this.TxtbxCategory.TabIndex = 1;
-            this.TxtbxCategory.TextChanged += new System.EventHandler(this.TxtbxCategory_TextChanged);
             // 
             // TxtbxImage
             // 
@@ -79,9 +79,8 @@
             this.TxtbxImage.Location = new System.Drawing.Point(150, 206);
             this.TxtbxImage.Name = "TxtbxImage";
             this.TxtbxImage.ReadOnly = true;
-            this.TxtbxImage.Size = new System.Drawing.Size(330, 20);
+            this.TxtbxImage.Size = new System.Drawing.Size(330, 22);
             this.TxtbxImage.TabIndex = 2;
-            this.TxtbxImage.TextChanged += new System.EventHandler(this.TxtbxImage_TextChanged);
             // 
             // TxtbxMediaFile
             // 
@@ -91,9 +90,8 @@
             this.TxtbxMediaFile.Location = new System.Drawing.Point(150, 274);
             this.TxtbxMediaFile.Name = "TxtbxMediaFile";
             this.TxtbxMediaFile.ReadOnly = true;
-            this.TxtbxMediaFile.Size = new System.Drawing.Size(330, 20);
+            this.TxtbxMediaFile.Size = new System.Drawing.Size(330, 22);
             this.TxtbxMediaFile.TabIndex = 3;
-            this.TxtbxMediaFile.TextChanged += new System.EventHandler(this.TxtbxMediaFile_TextChanged);
             // 
             // label1
             // 
@@ -101,7 +99,7 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(101, 93);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(46, 13);
+            this.label1.Size = new System.Drawing.Size(61, 17);
             this.label1.TabIndex = 4;
             this.label1.Text = "PlayList:";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -112,7 +110,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(95, 148);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(52, 13);
+            this.label2.Size = new System.Drawing.Size(69, 17);
             this.label2.TabIndex = 5;
             this.label2.Text = "Category:";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -123,7 +121,7 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(108, 210);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(39, 13);
+            this.label3.Size = new System.Drawing.Size(50, 17);
             this.label3.TabIndex = 6;
             this.label3.Text = "Image:";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -134,7 +132,7 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(92, 278);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(55, 13);
+            this.label4.Size = new System.Drawing.Size(72, 17);
             this.label4.TabIndex = 7;
             this.label4.Text = "MediaFile:";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -146,7 +144,7 @@
             this.TxtbxComment.ForeColor = System.Drawing.SystemColors.InfoText;
             this.TxtbxComment.Location = new System.Drawing.Point(150, 333);
             this.TxtbxComment.Name = "TxtbxComment";
-            this.TxtbxComment.Size = new System.Drawing.Size(330, 20);
+            this.TxtbxComment.Size = new System.Drawing.Size(330, 22);
             this.TxtbxComment.TabIndex = 8;
             // 
             // label5
@@ -155,7 +153,7 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(93, 337);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(54, 13);
+            this.label5.Size = new System.Drawing.Size(71, 17);
             this.label5.TabIndex = 9;
             this.label5.Text = "Comment:";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -208,14 +206,25 @@
             this.LblOutcome.AutoSize = true;
             this.LblOutcome.Location = new System.Drawing.Point(352, 404);
             this.LblOutcome.Name = "LblOutcome";
-            this.LblOutcome.Size = new System.Drawing.Size(0, 13);
+            this.LblOutcome.Size = new System.Drawing.Size(0, 17);
             this.LblOutcome.TabIndex = 13;
+            // 
+            // BtnRemoveImage
+            // 
+            this.BtnRemoveImage.Location = new System.Drawing.Point(486, 205);
+            this.BtnRemoveImage.Name = "BtnRemoveImage";
+            this.BtnRemoveImage.Size = new System.Drawing.Size(25, 25);
+            this.BtnRemoveImage.TabIndex = 14;
+            this.BtnRemoveImage.Text = "x";
+            this.BtnRemoveImage.UseVisualStyleBackColor = true;
+            this.BtnRemoveImage.Click += new System.EventHandler(this.BtnRemoveImage_Click);
             // 
             // EditForm
             // 
             this.AcceptButton = this.BtnUpdate;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(635, 482);
+            this.Controls.Add(this.BtnRemoveImage);
             this.Controls.Add(this.LblOutcome);
             this.Controls.Add(this.BtnUpdate);
             this.Controls.Add(this.BtnSelectImage);
@@ -253,5 +262,7 @@
         private System.Windows.Forms.TextBox TxtbxPlayList;
 
         #endregion
+
+        private System.Windows.Forms.Button BtnRemoveImage;
     }
 }
